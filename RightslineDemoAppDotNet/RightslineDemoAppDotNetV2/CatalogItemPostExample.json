@@ -1,0 +1,27 @@
+﻿{
+  "parentRelationship": null,
+  "revisionId": 0,
+  "title": "hvo-test-dotnet5",
+  "template": {
+    "fields": null,
+    "templateId": 13,
+    "templateName": "Episode",
+    "processID": 0,
+    "processName": "null"
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    "format": "HDCAM",
+    "genre": "Action, Comedy",
+    "file_format_type": "SD",
+    "original_air_date": "06/25/2018",
+    "release_date": "06/27/2018"
+  },
+  "createdById": 0,
+  "createdDate": "2018-06-27T18:54:07.183Z",
+  "lastUpdatedById": 0,
+  "lastUpdatedDate": "2018-06-27T18:54:07.183Z"
+}
