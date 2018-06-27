@@ -8,6 +8,9 @@ namespace RightslineDemoAppDotNetV2
         static void Main(string[] args)
         {            
             ConfigSetup.GetConfigFile();
+            RestClient rc = new RestClient();
+            string x = RestClient.GetCatalogItemDemoMethod().Result;
+            Console.WriteLine(x);
         }
     }
 }
