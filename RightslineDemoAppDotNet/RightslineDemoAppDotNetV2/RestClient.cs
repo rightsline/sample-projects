@@ -6,12 +6,17 @@ using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace RightslineDemoAppDotNetV2
 {
     public class RestClient
     {
         public static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
+        public static string DemoCatalogItem = "catalog-item/1552";
+        public static string DemoTableItem = "table/292";
         static HttpClient client = new HttpClient();
         #region Catalog Item Example Methods
         /// <summary>
@@ -19,8 +24,8 @@ namespace RightslineDemoAppDotNetV2
         /// Uses Basic Auth Credentials from ConfigSetup class
         /// </summary>
         /// <returns></returns>
-        public static string DemoCatalogItem = "catalog-item/1565";
         public static async Task<string> GetCatalogItemDemoMethod()
+        
         {            
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Clear();            
@@ -29,9 +34,9 @@ namespace RightslineDemoAppDotNetV2
             var result = await stringTask;            
             return result;
         }
-
+        
         /// <summary>
-        /// Asynce POST call to Rightsline's V2 API that creates a new Catalog Item
+        /// Async POST call to Rightsline's V2 API that creates a new Catalog Item
         /// </summary>
         /// <returns>ID of created Item</returns>
         public static string CatalogItemEpisodePostExample = "Catalog Item Example JSON/CatalogItemEpisodePOST.json";
@@ -48,5 +53,52 @@ namespace RightslineDemoAppDotNetV2
         }
 
         #endregion
+
+        #region Table Example methods
+        
+        public static string TablePostExample = "Table Example JSON/TablePostExample.json";
+        public static string TablePutExample = "Table Example JSON/TablePutExample.json";
+        
+        public static async Task<string> GetTable()
+        {
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Clear();            
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            var stringTask = client.GetStringAsync(BaseConnectionString + DemoTableItem);
+            var result = await stringTask;            
+            return result;
+        }
+        public static async Task<string> PostTable()
+        {
+            client.DefaultRequestHeaders.Accept.Clear();            
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);
+
+            var jsonObj = File.ReadAllText(TablePostExample);
+            
+            var postTask = client.PostAsync(BaseConnectionString + "table", new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var result = await postTask;            
+            return result.Content.ReadAsStringAsync().Result;
+        }
+        public static async Task<string> PutTable()
+        {
+            client.DefaultRequestHeaders.Accept.Clear();            
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            var jsonObj = File.ReadAllText(TablePutExample);
+            
+            var putTask = client.PutAsync(BaseConnectionString + DemoTableItem, new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var result = await putTask;            
+            return result.Content.ReadAsStringAsync().Result;
+        }
+        
+        public static async Task<string> DeleteTable()
+        {
+            client.DefaultRequestHeaders.Accept.Clear();            
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            var stringTask = client.DeleteAsync(BaseConnectionString + DemoTableItem);
+            var result = await stringTask;            
+            return result.Content.ReadAsStringAsync().Result;
+        }
+        #endregion
+        
     }    
 }
