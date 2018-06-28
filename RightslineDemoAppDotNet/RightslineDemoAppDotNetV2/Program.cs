@@ -9,12 +9,14 @@ namespace RightslineDemoAppDotNetV2
         {            
             ConfigSetup.GetConfigFile();
             RestClient rc = new RestClient();
-//            string x = RestClient.GetCatalogItemDemoMethod().Result;
-//            Console.WriteLine(x);
-//            string y = RestClient.PostCatalogItemDemoMethod().Result;
-//            Console.WriteLine("New Catalog Item ID: " + y);
-            string postTableResult = RestClient.PutTable().Result;
+            string x = RestClient.GetCatalogItemDemoMethod().Result;
+            Console.WriteLine(x);
+            string y = RestClient.PostCatalogItemDemoMethod().Result;
+            Console.WriteLine("New Catalog Item ID: " + y);
+            string postTableResult = RestClient.PostTable().Result;
             Console.WriteLine(postTableResult);
+            string putTableResult = RestClient.PutTable().Result;
+            Console.WriteLine(putTableResult);
         }
     }
 }
