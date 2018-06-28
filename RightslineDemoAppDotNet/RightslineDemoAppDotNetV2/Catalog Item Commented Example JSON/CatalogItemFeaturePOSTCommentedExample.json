@@ -67,7 +67,7 @@
     //MM/DD/YYYY
     "original_air_date": "06/29/2018",
     "festival_premiere": "Festival Premiere",
-    "awards": "Awards",
+    "awards": "Awards|Awards2",
     "swift_code": "Swift Code",
     //Options for locSym and divSym: USD, GBP, EUR
     "global_box_office_gross": "{\"locAmt\":\"120\",\"locCur\":1,\"locSym\":\"USD\",\"divAmt\":\"120.00\",\"divCur\":1,\"divSym\":\"USD\"}",

@@ -19,13 +19,14 @@ namespace RightslineDemoAppDotNetV2
         /// Uses Basic Auth Credentials from ConfigSetup class
         /// </summary>
         /// <returns></returns>
-        public static string DemoCatalogItem = "catalog-item/1565";
+        public static string DemoCatalogItemFeature = "catalog-item/1565";
+        public static string DemoCatalogItemEpisode = "catalog-item/1576";
         public static async Task<string> GetCatalogItemDemoMethod()
         {            
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Clear();            
             client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
-            var stringTask = client.GetStringAsync(BaseConnectionString + DemoCatalogItem);
+            var stringTask = client.GetStringAsync(BaseConnectionString + DemoCatalogItemEpisode);
             var result = await stringTask;            
             return result;
         }
