@@ -1,16 +1,17 @@
-﻿{
+﻿//MANDATORY FIELDS: Title, TemplateId, TemplateName
+{
   "parentRelationship": null,
   //IDs will be auto generated on POST
   "id": 0,
   "revisionId": 0,
-  "title": "hvo-allfields-episode",
+  "title": "Episode POST Example",
   "template": {
     "fields": null,
     "templateId": 13,
     "templateName": "Episode",
     "processID": 0,
     "processName": null
-  },
+  },  
   "status": {
     "statusId": 1,
     "statusName": "Development"
