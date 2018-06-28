@@ -1,14 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="Catalog Item Example JSON\CatalogItemEpisodePOST.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -17,5 +14,4 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
 </Project>

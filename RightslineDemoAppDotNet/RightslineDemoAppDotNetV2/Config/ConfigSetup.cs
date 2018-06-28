@@ -12,7 +12,7 @@ namespace RightslineDemoAppDotNetV2.Config
         /// </summary>
         public static void GetConfigFile()
         {            
-            var folderPath = AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin"));
+            var folderPath = AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin", StringComparison.Ordinal));
             var filePath = Path.Combine(folderPath, "Config\\config.json");
             try
             {
