@@ -11,8 +11,8 @@ namespace RightslineDemoAppDotNetV2
             RestClient rc = new RestClient();
             string x = RestClient.GetCatalogItemDemoMethod().Result;
             Console.WriteLine(x);
-            string y = RestClient.PostCatalogItemDemoMethod().Result;
-            Console.WriteLine("New Catalog Item ID: " + y);
+            //string y = RestClient.PostCatalogItemDemoMethod().Result;
+            //Console.WriteLine("New Catalog Item ID: " + y);
         }
     }
 }

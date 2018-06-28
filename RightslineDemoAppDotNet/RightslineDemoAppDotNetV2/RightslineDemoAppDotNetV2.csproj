@@ -10,7 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CatalogItemPostExample.json">
+    <None Update="Catalog Item Example JSON\CatalogItemEpisodePOST.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Catalog Item Example JSON\CatalogItemFeaturePOST.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
