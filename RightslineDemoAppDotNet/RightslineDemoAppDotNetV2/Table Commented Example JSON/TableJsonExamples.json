@@ -13,7 +13,7 @@
       "template": {
         "fields": null, 
         "templateId": 13, // Mandatory Field
-        "templateName": "Sales Estimates", // Mandatory Field
+        "templateName": "Sales Estimates" // Mandatory Field
       },
       "status": {
         "statusId": 1,// Mandatory Field
