@@ -1,11 +1,10 @@
-﻿//MANDATORY FIELDS: title, aka, templateId, templateName
-//Any other field can be removed if you don't have the information for it
-//This will generate a feature with the following information and automatically set the rest to default/empty
+﻿//MANDATORY FIELDS: title, aka, templateId,
+//Any field not marked mandatory can be left out of the json and default values/empty will be assigned to them
+//This is an example of the bare minimum needed for a feature to be created
 //{
 //  "title": "test-emptyfeature",
 //  "template": {
-//    "templateId": 1,
-//    "templateName": "Feature",
+//    "templateId": 1
 //  },
 //  "characteristics": {
 //    "aka": "emptyfeature-test"

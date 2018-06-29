@@ -1,20 +1,10 @@
-﻿//MANDATORY FIELDS: Title, TemplateId
-//Any field not marked mandatory can be left out of the json and default values/empty will be assigned to them
-//This is an example of the bare minimum needed for an episode to be created
-//{
-//  "title":"barebones-episode",
-//  "template": {
-//      templateId: 13
-//}
+﻿//Any field that is not marked as mandatory can be removed from the JSON and the PUT request will not update the field
 {
   "parentRelationship": null,
-  //IDs will be auto generated on POST
-  "id": 0,
-  "revisionId": 0,
-  "title": "Episode POST Example", //Manadatory Field
+  "title": "hvo-testepisode-1-revision", //Mandatory field
   "template": {
     "fields": null,
-    "templateId": 13, // Mandatory Field
+    "templateId": 13, // Mandatory field
     "templateName": "Episode",
     "processID": 0,
     "processName": null
@@ -25,7 +15,18 @@
   },
   "characteristics": {
     //OPTIONS: DCP 2K, DCP4K, HDCAM SR 444, HDCAM SR 422, HDCAM, DIGIBETA, DVCAM
-    "format": "DIGIBETA",
+    "format": "HDCAM",
+    //OPTIONS: Action, Adventure, Animation, Biopic, Comedy, Contained, Drama, Documentary, Family, Fantasy, Foreign Language, Foreign Set, Heist/Caper, Horror, Period/Polical,
+    //Post-Apocalyptic, Romantic Comedy, Sci-Fi, Sports, Spy, Superhero, Supernatural, Thriller, War, Western, YA, Zombie, Creature, Young Adult, Remake
+    //Can be seperated by | or ,
+    "genre": "Action|Adventure|Animation",
+    //OPTIONS: HD, SD, UHD
+    "file_format_type": "UHD",
+    //Will overrite existing awards on the item, be sure to add existing awards to the put request if you don't want to remove them
+    //Awards are seperated by |
+    "awards": "Award 1| Award 2",
+    "original_air_date": "06/25/2018",
+    "release_date": "06/27/2018",
     //OPTIONS: EIA-608 (DTVCC Transport) text stream, EIA-708 (DTVCC Transport) text stream, European Broadcasting Union (.STL) external files
     //Timed Text Markup Language (.ITT) external files, D-Cinema Interop (.XML) external files, Screen Electronics (.PAC) external files
     //Timed Text (v1.0) (.DFXP) external files, Subrip (.SRT) external files, Scenario Closed Captions (.SCC) external files
@@ -41,20 +42,6 @@
     //Spanish (Argentinean), Spanish (Castilian), Spanish (Chilean), Spanish (Cuban), Spanish (Latin American), Spanish (Mexican), Spanish (Puerto Rican)
     //Swahili, Swedish, Tagalog, Tamil, Telugu, Thai, Tibetan, Turkish, Ukranian, Undefined, Urdu, Vietnamese, Welsh, Yiddish, Yugoslavian, Zulu
     //LOCAL LANGUAGE, OTHER
-    "subtitle_language": "Afghan/Pashtu",
-    "original_air_date": "06/01/2018",
-    //Awards seperated by |
-    "awards": "Award|Award 2",
-    "release_date": "06/01/2018",
-    //OPTIONS: Action, Adventure, Animation, Biopic, Comedy, Contained, Drama, Documentary, Family, Fantasy, Foreign Language, Foreign Set, Heist/Caper, Horror, Period/Polical,
-    //Post-Apocalyptic, Romantic Comedy, Sci-Fi, Sports, Spy, Superhero, Supernatural, Thriller, War, Western, YA, Zombie, Creature, Young Adult, Remake
-    //Can be seperated by | or ,
-    "genre": "Adventure|Biopic",
-    //OPTIONS: HD, SD, UHD
-    "file_format_type": "SD"
-  },
-  "createdById": 0,
-  "createdDate": "0",
-  "lastUpdatedById": 0,
-  "lastUpdatedDate": "0"
-}
+    "subtitle_language": "English (US)"
+  }
+ }
