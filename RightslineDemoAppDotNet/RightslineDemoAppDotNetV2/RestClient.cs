@@ -16,9 +16,18 @@ namespace RightslineDemoAppDotNetV2
     {
         static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
         static string CatalogItem = "catalog-item/";
-        static string DemoTableItem = "table/292";
+        static string DemoTableItem = "table/2249";
         static HttpClient client = new HttpClient();
+
+        public static void ClearHeadersAndAddAuthentication()
+        {
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);
+        }
+
         #region Catalog Item Example Methods
+
         /// <summary>
         /// Async GET call to Rightsline's V2 API that returns a json string of the catalog-item with a specified ID
         /// Uses Basic Auth Credentials from ConfigSetup class
@@ -27,15 +36,14 @@ namespace RightslineDemoAppDotNetV2
         /// <returns></returns>
         public static string DemoCatalogItemFeature = "catalog-item/1565";
         public static string DemoCatalogItemEpisode = "catalog-item/1555";
-        public static async Task<string> GetCatalogItemDemo(int id)        
-        {            
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Clear();            
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
-            var stringTask = client.GetStringAsync(BaseConnectionString + CatalogItem + id);
-            var result = await stringTask;            
+        public static async Task<string> GetCatalogItemDemoMethod()
+
+        {
+            ClearHeadersAndAddAuthentication();
+            var stringTask = client.GetStringAsync(BaseConnectionString + DemoCatalogItem);
+            var result = await stringTask;
             return result;
-        }        
+        }       
         
         public static string CatalogItemEpisodePostExample = "Catalog Item Example JSON/CatalogItemEpisodePOST.json";
         public static string CatalogItemFeaturePostExample = "Catalog Item Example JSON/CatalogItemFeaturePOST.json";    
@@ -43,13 +51,16 @@ namespace RightslineDemoAppDotNetV2
         /// Async POST call to Rightsline's V2 API that creates a new Catalog Item
         /// </summary>
         /// <returns>ID of created Item</returns>
-        public static async Task<string> PostCatalogItemDemo()
+        public static string CatalogItemEpisodePostExample = "Catalog Item Example JSON/CatalogItemEpisodePOST.json";
+
+        private const string CatalogItemFeaturePostExample = "Catalog Item Example JSON/CatalogItemFeaturePOST.json";
+
+        public static async Task<string> PostCatalogItemDemoMethod()
         {
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            ClearHeadersAndAddAuthentication();
             var jsonObj = File.ReadAllText(CatalogItemFeaturePostExample);
-            var postTask = client.PostAsync(BaseConnectionString + "catalog-item", new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var postTask = client.PostAsync(BaseConnectionString + "catalog-item",
+                new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
             var result = await postTask;
             return result.Content.ReadAsStringAsync().Result;
         }
@@ -88,49 +99,80 @@ namespace RightslineDemoAppDotNetV2
         }
         #endregion
 
-        #region Table Example methods        
-        public static string TablePostExample = "Table Example JSON/TablePostExample.json";
-        public static string TablePutExample = "Table Example JSON/TablePutExample.json";        
-        public static async Task<string> GetTable()
+        #region Table Example methods
+
+        private const string TablePostExample = "Table Example JSON/TablePostExample.json";
+        private const string TablePutExample = "Table Example JSON/TablePutExample.json";
+
+        public static async Task<string> GetTable(int tableId)
         {
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Clear();            
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
-            var stringTask = client.GetStringAsync(BaseConnectionString + DemoTableItem);
-            var result = await stringTask;            
+            ClearHeadersAndAddAuthentication();
+
+            var stringTask = client.GetStringAsync(BaseConnectionString + "table/" + tableId);
+            var result = await stringTask;
             return result;
         }
+
+        /// <summary>
+        /// Async POST call to Rightsline's V2 API that creates a new Table
+        /// Find the JSON submitted for this call under /Table Example JSON
+        /// Final list of all possible tables that can be posted can be found under /Table Commented Example JSON
+        /// </summary>
+        /// <returns>ID of created Table</returns>
         public static async Task<string> PostTable()
         {
-            client.DefaultRequestHeaders.Accept.Clear();            
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);
+            ClearHeadersAndAddAuthentication();
 
             var jsonObj = File.ReadAllText(TablePostExample);
-            
-            var postTask = client.PostAsync(BaseConnectionString + "table", new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
-            var result = await postTask;            
+
+            var postTask = client.PostAsync(BaseConnectionString + "table",
+                new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var result = await postTask;
             return result.Content.ReadAsStringAsync().Result;
         }
-        public static async Task<string> PutTable()
+
+        /// <summary>
+        /// Async PUT call to Rightsline's V2 API that creates a new Catalog Item
+        /// PUT calls should not be sent over with relationship information 
+        /// </summary>
+        /// <returns>ID of created Item</returns>
+        public static async Task<string> PutTable(int tableId)
         {
-            client.DefaultRequestHeaders.Accept.Clear();            
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            ClearHeadersAndAddAuthentication();
+
             var jsonObj = File.ReadAllText(TablePutExample);
-            
-            var putTask = client.PutAsync(BaseConnectionString + DemoTableItem, new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
-            var result = await putTask;            
+
+            var putTask = client.PutAsync(BaseConnectionString + "table/" + tableId,
+                new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var result = await putTask;
             return result.Content.ReadAsStringAsync().Result;
         }
-        
-        public static async Task<string> DeleteTable()
+
+        /// <summary>
+        /// Async DELETE call to Rightsline's V2 API that creates a new Table
+        /// 
+        /// </summary>
+        /// <returns>ID of created Table</returns>
+        public static async Task<string> DeleteTable(int tableId)
         {
-            client.DefaultRequestHeaders.Accept.Clear();            
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
-            var stringTask = client.DeleteAsync(BaseConnectionString + DemoTableItem);
-            var result = await stringTask;            
+            ClearHeadersAndAddAuthentication();
+            var deleteTask = client.DeleteAsync(BaseConnectionString + "table/" + tableId);
+            var result = await deleteTask;
             return result.Content.ReadAsStringAsync().Result;
         }
+
         #endregion
         
-    }    
+        #region Relationship Example Methods
+        public static async Task<string> GetRelationships()
+        {
+            ClearHeadersAndAddAuthentication();
+            var getTask = client.GetAsync(BaseConnectionString + "relationship");
+            var result = await getTask;
+            return result.Content.ReadAsStringAsync().Result;
+      
+
+        }
+        #endregion
+    }
 }
