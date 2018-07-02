@@ -53,6 +53,7 @@
     //OPTIONS: HD, SD, UHD
     "file_format_type": "SD"
   },
+  //These fields are automatically generated when on a successful post and they are unneccessary to have here
   "createdById": 0,
   "createdDate": "0",
   "lastUpdatedById": 0,

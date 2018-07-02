@@ -1,4 +1,4 @@
-﻿//MANDATORY FIELDS: title, aka, templateId,
+﻿//MANDATORY FIELDS: title, aka, templateId
 //Any field not marked mandatory can be left out of the json and default values/empty will be assigned to them
 //This is an example of the bare minimum needed for a feature to be created
 //{
@@ -20,6 +20,7 @@
   "title": "Feature Title",
   "template": {
     "fields": null,
+    //Mandatory field
     "templateId": 1,
     "templateName": "Feature",
     "processID": 0,
@@ -43,6 +44,7 @@
     //Must be url
     "imdb_link": "imdb.com",
     "bank_address": "Bank Address",
+    //Mandatory field
     "aka": "Alternative Feature Title",
     //OPTIONS: G, PG, PG-13, R, NC-17, Not Rated, X
     "mpaa_rating": "PG-13",
@@ -84,7 +86,7 @@
     "account_number": "Account Number",
     "overview_notes": "Overview notes"
   },
-  //Auto generated on post
+  //These fields are automatically generated when on a successful post and they are unneccessary to have here
   "createdById": 0,
   "createdDate": 0,
   "lastUpdatedById": 0,
