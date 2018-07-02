@@ -1,26 +1,19 @@
-﻿//MANDATORY FIELDS: title, aka, templateId
-//Any field not marked mandatory can be left out of the json and default values/empty will be assigned to them
-//This is an example of the bare minimum needed for a feature to be created
+﻿//MANDATORY FIELDS: title, aka
+//Any fields not marked mandatory can be left out of the json and the PUT request will not update those fields
+//This is an example of the bare minimum needed for a valid PUT request
 //{
 //  "title": "test-emptyfeature",
 //  "template": {
 //    "templateId": 1
-//  },
-//  "characteristics": {
-//    "aka": "emptyfeature-test"
-//  }
+//  }  
 //}
 
-
+// The ID is passed in as a query string the URL so it is not needed in the JSON
 {
-  "parentRelationship": null,
-  //IDs will be auto generated on POST
-  "id": 0,
-  "revisionId": 0,
+  "parentRelationship": null,  
   "title": "Feature Title",
   "template": {
     "fields": null,
-    //Mandatory field
     "templateId": 1,
     "templateName": "Feature",
     "processID": 0,
@@ -44,7 +37,6 @@
     //Must be url
     "imdb_link": "imdb.com",
     "bank_address": "Bank Address",
-    //Mandatory field
     "aka": "Alternative Feature Title",
     //OPTIONS: G, PG, PG-13, R, NC-17, Not Rated, X
     "mpaa_rating": "PG-13",
@@ -86,9 +78,9 @@
     "account_number": "Account Number",
     "overview_notes": "Overview notes"
   },
-  //These fields are automatically generated when on a successful post and they are unneccessary to have here
-  "createdById": 0,
-  "createdDate": 0,
+  //On a successful PUT the lastUpdated fields will be updated automatically  
   "lastUpdatedById": 0,
   "lastUpdatedDate": 0
 }
+
+

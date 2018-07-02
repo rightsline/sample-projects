@@ -14,9 +14,9 @@ namespace RightslineDemoAppDotNetV2
 {
     public class RestClient
     {
-        public static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
-        public static string DemoCatalogItem = "catalog-item/1552";
-        public static string DemoTableItem = "table/2249";
+        static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
+        static string CatalogItem = "catalog-item/";
+        static string DemoTableItem = "table/2249";
         static HttpClient client = new HttpClient();
 
         public static void ClearHeadersAndAddAuthentication()
@@ -32,24 +32,24 @@ namespace RightslineDemoAppDotNetV2
         /// Async GET call to Rightsline's V2 API that returns a json string of the catalog-item with a specified ID
         /// Uses Basic Auth Credentials from ConfigSetup class
         /// </summary>
+        /// <param name="catalogItemId"></param>"
         /// <returns></returns>
-        public static async Task<string> GetCatalogItemDemoMethod()
-
+        public static string DemoCatalogItemFeature = "catalog-item/1565";
+        public static string DemoCatalogItemEpisode = "catalog-item/1555";
+        public static async Task<string> GetCatalogItemDemoMethod(int catalogItemId)
         {
             ClearHeadersAndAddAuthentication();
-            var stringTask = client.GetStringAsync(BaseConnectionString + DemoCatalogItem);
+            var stringTask = client.GetStringAsync(BaseConnectionString + CatalogItem + catalogItemId);
             var result = await stringTask;
             return result;
-        }
-
+        }       
+        
+        public static string CatalogItemEpisodePostExample = "Catalog Item Example JSON/CatalogItemEpisodePOST.json";
+        public static string CatalogItemFeaturePostExample = "Catalog Item Example JSON/CatalogItemFeaturePOST.json";    
         /// <summary>
         /// Async POST call to Rightsline's V2 API that creates a new Catalog Item
         /// </summary>
         /// <returns>ID of created Item</returns>
-        public static string CatalogItemEpisodePostExample = "Catalog Item Example JSON/CatalogItemEpisodePOST.json";
-
-        private const string CatalogItemFeaturePostExample = "Catalog Item Example JSON/CatalogItemFeaturePOST.json";
-
         public static async Task<string> PostCatalogItemDemoMethod()
         {
             ClearHeadersAndAddAuthentication();
@@ -60,6 +60,40 @@ namespace RightslineDemoAppDotNetV2
             return result.Content.ReadAsStringAsync().Result;
         }
 
+        public static string CatalogItemEpisodePutExample = "Catalog Item Example JSON/CatalogItemEpisodePUT.json";
+        public static string CatalogItemFeaturePutExample = "Catalog Item Example JSON/CatalogItemFeaturePUT.json";
+        /// <summary>
+        /// Async PUT call to Rightsline's V2 API that will update a Catalog-Item with a given ID
+        /// IDs are passed in as a query string in the URL
+        /// </summary>
+        /// <param name="catalogItemId"></param>
+        /// <returns>JSON object as string of the modified Catalog-Item</returns>
+        public static async Task<string> PutCatalogItemDemo(int catalogItemId)
+        {
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);
+            var jsonObj = File.ReadAllText(CatalogItemEpisodePutExample);            
+            var putTask = client.PutAsync(BaseConnectionString  + CatalogItem + catalogItemId, new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            var result = await putTask;
+            return result.Content.ReadAsStringAsync().Result;
+        }
+
+        /// <summary>
+        /// Async DELETE call to Rightsline's V2 API that will delete a Catalog-Item with a given ID
+        /// IDs are passed in as a query string in the URL
+        /// </summary>
+        /// <param name="catalogItemId"></param>
+        /// <returns></returns>
+        public static async Task<string> DeleteCatalogItemDemo(int catalogItemId)
+        {
+            client.DefaultRequestHeaders.Clear();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            var deleteTask = client.DeleteAsync(BaseConnectionString + CatalogItem + catalogItemId);
+            var result = await deleteTask;
+            return result.Content.ReadAsStringAsync().Result;
+        }
         #endregion
 
         #region Table Example methods
