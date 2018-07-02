@@ -16,14 +16,20 @@ namespace RightslineDemoAppDotNetV2
 
             
             
-            string getTableResult = RestClient.GetTable(2340).Result;
-            Console.WriteLine(getTableResult);
+//            string getTableResult = RestClient.GetTable(2340).Result;
+//            Console.WriteLine(getTableResult);
 //            string postTableResult = RestClient.PostTable().Result;
 //            Console.WriteLine(postTableResult);
 //            string putTableResult = RestClient.PutTable(2340).Result;
 //            Console.WriteLine(putTableResult);
 //            string deleteTable = RestClient.DeleteTable(2340).Result;
 //            Console.WriteLine(deleteTable);
+
+//            string getRelationships = RestClient.GetRelationships().Result;
+//            Console.WriteLine(getRelationships);
+            
+            Console.WriteLine("Rightsline Demo v0.0.1");
+            Console.WriteLine("");
         }
     }
 }

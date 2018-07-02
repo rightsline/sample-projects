@@ -125,17 +125,41 @@ namespace RightslineDemoAppDotNetV2
         }
 
         #endregion
-        
+
         #region Relationship Example Methods
+
         public static async Task<string> GetRelationships()
         {
             ClearHeadersAndAddAuthentication();
             var getTask = client.GetAsync(BaseConnectionString + "relationship");
             var result = await getTask;
             return result.Content.ReadAsStringAsync().Result;
-      
-
         }
+
+        public static async Task<string> PostRelationships()
+        {
+            ClearHeadersAndAddAuthentication();
+            var getTask = client.GetAsync(BaseConnectionString + "relationship");
+            var result = await getTask;
+            return result.Content.ReadAsStringAsync().Result;
+        }
+
+        public static async Task<string> PutRelationships()
+        {
+            // PUT IS NOT SUPPORTED
+            throw new NotImplementedException();
+            // NOPE
+            // DONT EVEN THINK ABOUT IT
+        }
+
+        public static async Task<string> DeleteRelationships()
+        {
+            ClearHeadersAndAddAuthentication();
+            var getTask = client.DeleteAsync(BaseConnectionString + "relationship");
+            var result = await getTask;
+            return result.Content.ReadAsStringAsync().Result;
+        }
+
         #endregion
     }
 }
