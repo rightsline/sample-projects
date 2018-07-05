@@ -9,18 +9,28 @@ namespace RightslineDemoAppDotNetV2
         {            
             ConfigSetup.GetConfigFile();
             RestClient rc = new RestClient();
-            //string x = RestClient.GetCatalogItemDemo().Result;
-            //Console.WriteLine(x);
-            //string y = RestClient.PostCatalogItemDemo().Result;
-            //Console.WriteLine("New Catalog Item ID: " + y);
-            //string PutRequestResult = RestClient.PutCatalogItemDemo(1555).Result;
-            //Console.WriteLine(PutRequestResult);
-            string DeleteRequestResult = RestClient.DeleteCatalogItemDemo(1588).Result;
-            Console.WriteLine(DeleteRequestResult);
-            //string postTableResult = RestClient.PostTable().Result;
-            //Console.WriteLine(postTableResult);
-            //string putTableResult = RestClient.PutTable().Result;
-            //Console.WriteLine(putTableResult);
+//            string x = RestClient.GetCatalogItemDemoMethod().Result;
+//            Console.WriteLine(x);
+//            string y = RestClient.PostCatalogItemDemoMethod().Result;
+//            Console.WriteLine("New Catalog Item ID: " + y);
+
+            
+            
+//            string getTableResult = RestClient.GetTable(2340).Result;
+//            Console.WriteLine(getTableResult);
+//            string postTableResult = RestClient.PostTable().Result;
+//            Console.WriteLine(postTableResult);
+//            string putTableResult = RestClient.PutTable(2340).Result;
+//            Console.WriteLine(putTableResult);
+//            string deleteTable = RestClient.DeleteTable(2340).Result;
+//            Console.WriteLine(deleteTable);
+
+//            string getRelationships = RestClient.GetRelationships().Result;
+//            Console.WriteLine(getRelationships);
+            
+            Console.WriteLine("Rightsline Demo v0.0.1");
+            Console.WriteLine("");
+
         }
     }
 }
