@@ -30,6 +30,7 @@ namespace RightslineDemoAppDotNetV2
             
             Console.WriteLine("Rightsline Demo v0.0.1");
             Console.WriteLine("");
+
         }
     }
 }

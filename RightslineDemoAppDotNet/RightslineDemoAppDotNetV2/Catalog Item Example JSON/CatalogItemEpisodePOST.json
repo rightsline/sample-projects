@@ -1,7 +1,7 @@
 ﻿{  
   "parentRelationship": null,
   "revisionId": 0,
-  "title": "hvo-test-dotnet8",
+  "title": "Example Episode POST",
   "template": {
     "fields": null,
     "templateId": 13,
@@ -17,11 +17,9 @@
     "format": "HDCAM",
     "genre": "Action, Adventure, Animation",
     "file_format_type": "SD",
+    "subtitle_format": "EIA-708 (DTVCC Transport) text stream",
+    "subtitle_language": "English (US)",
     "original_air_date": "06/25/2018",
     "release_date": "06/27/2018"
-  },
-  "createdById": 0,
-  "createdDate": "0",
-  "lastUpdatedById": 0,
-  "lastUpdatedDate": "0"
+  }
 }
