@@ -54,7 +54,7 @@ namespace RightslineDemoAppDotNetV2
         {
             ClearHeadersAndAddAuthentication();
             var jsonObj = File.ReadAllText(CatalogItemFeaturePostExample);
-            var postTask = client.PostAsync(BaseConnectionString + "catalog-item",
+            var postTask = client.PostAsync(BaseConnectionString + CatalogItem,
                 new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
             var result = await postTask;
             return result.Content.ReadAsStringAsync().Result;
