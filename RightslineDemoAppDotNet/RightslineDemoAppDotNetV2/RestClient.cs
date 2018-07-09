@@ -162,18 +162,33 @@ namespace RightslineDemoAppDotNetV2
 
         #region Relationship Example Methods
 
-        public static async Task<string> GetRelationships()
+        public static string RelationshipPostExample = "Relationship Example JSON/RelationshipPost.json";
+        
+        /// <summary>
+        /// Async GET call to Rightsline's V2 API that will return details of a relationship
+        /// IDs are passed in as a query string in the URL
+        /// </summary>
+        /// <param name="relationshipId"></param>
+        /// <returns>JSON</returns>
+        public static async Task<string> GetRelationship(int relationshipId)
         {
             ClearHeadersAndAddAuthentication();
-            var getTask = client.GetAsync(BaseConnectionString + "relationship");
+            var getTask = client.GetAsync(BaseConnectionString + "relationship/"+relationshipId);
             var result = await getTask;
             return result.Content.ReadAsStringAsync().Result;
         }
-
+        /// <summary>
+        /// Async POST call to Rightsline's V2 API that will create a new relationship
+        /// Relationships can be created between any two entities
+        /// </summary>
+        /// <returns>relationshipId</returns>
         public static async Task<string> PostRelationships()
         {
-            ClearHeadersAndAddAuthentication();
-            var getTask = client.GetAsync(BaseConnectionString + "relationship");
+            ClearHeadersAndAddAuthentication();            
+            var jsonObj = File.ReadAllText(RelationshipPostExample);
+
+            var getTask = client.PostAsync(BaseConnectionString + "relationship", new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
+            
             var result = await getTask;
             return result.Content.ReadAsStringAsync().Result;
         }
@@ -186,14 +201,22 @@ namespace RightslineDemoAppDotNetV2
             // DONT EVEN THINK ABOUT IT
         }
 
-        public static async Task<string> DeleteRelationships()
+        /// <summary>
+        /// Async DELETE call to Rightsline's V2 API that will delete a relationship between two items
+        /// IDs are passed in as a query string in the URL
+        /// </summary>
+        /// <param name="relationshipId"></param>
+        /// <returns>On success, returns ""</returns>
+        public static async Task<string> DeleteRelationships(int relationshipId)
         {
             ClearHeadersAndAddAuthentication();
-            var getTask = client.DeleteAsync(BaseConnectionString + "relationship");
+            var getTask = client.DeleteAsync(BaseConnectionString + "relationship/"+relationshipId);
             var result = await getTask;
             return result.Content.ReadAsStringAsync().Result;
         }
 
         #endregion
+        
+        
     }
 }
