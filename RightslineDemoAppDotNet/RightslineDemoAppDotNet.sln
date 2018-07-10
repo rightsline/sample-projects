@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2027
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightslineDemoAppDotNetV2", "RightslineDemoAppDotNetV2\RightslineDemoAppDotNetV2.csproj", "{36E3539C-2020-4D80-ABCD-7F7B95C0BFAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RightslineDemoAppDotNetV2", "RightslineDemoAppDotNetV2\RightslineDemoAppDotNetV2.csproj", "{36E3539C-2020-4D80-ABCD-7F7B95C0BFAB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightslineDemoAppDotNetV3", "RightslineDemoAppDotNetV3\RightslineDemoAppDotNetV3.csproj", "{DE622142-D612-4415-8059-341051DA9469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RightslineDemoAppDotNetV3", "RightslineDemoAppDotNetV3\RightslineDemoAppDotNetV3.csproj", "{DE622142-D612-4415-8059-341051DA9469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RightslineDemoAppDotNetSQS", "RightslineDemoAppDotNetSQS\RightslineDemoAppDotNetSQS.csproj", "{BA684881-BD0F-4934-A62D-5D53481E17F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{DE622142-D612-4415-8059-341051DA9469}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE622142-D612-4415-8059-341051DA9469}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE622142-D612-4415-8059-341051DA9469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA684881-BD0F-4934-A62D-5D53481E17F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA684881-BD0F-4934-A62D-5D53481E17F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA684881-BD0F-4934-A62D-5D53481E17F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA684881-BD0F-4934-A62D-5D53481E17F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
