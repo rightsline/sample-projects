@@ -63,6 +63,8 @@
     "awards": "Awards|Awards2",
     "swift_code": "Swift Code",
     //Options for locSym and divSym: USD, GBP, EUR
+    //This is an extracted JSON object specific to the V2 version of the API
+    //V3 has a different syntax for currency
     "global_box_office_gross": "{\"locAmt\":\"120\",\"locCur\":1,\"locSym\":\"USD\",\"divAmt\":\"120.00\",\"divCur\":1,\"divSym\":\"USD\"}",
     //4 Digit year
     "festival_year": "2018",

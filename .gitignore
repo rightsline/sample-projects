@@ -261,3 +261,4 @@ __pycache__/
 *.pyc
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV2/Config/config.json
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Config/config.json
+/RightslineDemoAppDotNet/RightslineDemoAppDotNetSQS/Config/config.json
