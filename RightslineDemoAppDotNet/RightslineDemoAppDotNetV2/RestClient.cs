@@ -12,6 +12,10 @@ using Newtonsoft.Json.Serialization;
 
 namespace RightslineDemoAppDotNetV2
 {
+    /// <summary>
+    /// All the IDs you see here are specific to the QA environment
+    /// CHANGE THE IDs TO MATCH YOUR ENVIRONMENT
+    /// </summary>
     public class RestClient
     {
         static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
