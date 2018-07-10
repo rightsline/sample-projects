@@ -14,9 +14,7 @@ namespace RightslineDemoAppDotNetV3
 {
     public class RestClient
     {
-        static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
-//        static string CatalogItem = "catalog-item/";
-//        static string DemoTableItem = "table/2249";
+        static string BaseConnectionString = "http://api-qa.rightsline.com/v3/";
         static HttpClient client = new HttpClient();
 
         public static void ClearHeadersAndAddAuthentication()
