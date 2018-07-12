@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RightslineDemoAppDotNetSQS.Config;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -9,6 +10,11 @@ namespace RightslineDemoAppDotNetSQS
     //We recommend using the SDK but we have created this example in case you are restricted from using it
     public class RestClient
     {
-        private static string BaseUrl = "https://sqs.us-west-2.amazonaws.com";
+        private static string BaseUrl = "https://sqs.us-west-2.amazonaws.com/";
+
+        public static void CreateUrl()
+        {
+            string url = BaseUrl + ConfigSetup.AccountId + "/" + ConfigSetup.QueueName + "/";
+        }
     }
 }
