@@ -13,7 +13,7 @@ namespace RightslineDemoAppDotNetSQS.Config
 {
     public class ConfigSetup
     {
-        private static string AccountId { get; set; }
+        public static string AccountId { get; set; }
         public static string QueueName { get; set; }
         public static string AccessKey { get; set; }
         public static string SecretKey { get; set; }
@@ -34,7 +34,6 @@ namespace RightslineDemoAppDotNetSQS.Config
                 QueueName = credentials.GetValue("QueueName").ToString();
                 AccessKey = credentials.GetValue("AccessKey").ToString();
                 SecretKey = credentials.GetValue("SecretKey").ToString();
-                _sha256 = SHA256.Create();
             }
             catch (Exception e)
             {
@@ -43,6 +42,7 @@ namespace RightslineDemoAppDotNetSQS.Config
                                   "Config folder.");
             }
         }
+
 
         private string Hash(string stringToHash)
         {
