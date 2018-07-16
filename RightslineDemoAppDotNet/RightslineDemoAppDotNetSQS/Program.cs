@@ -10,7 +10,7 @@ namespace RightslineDemoAppDotNetSQS
     {
         static void Main(string[] args)
         {
-
+            RestClient.GetSQSMessages();
         }
     }
 }
