@@ -6,6 +6,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using AWSSignatureV4_S3_Sample.Util;
 
+//
+// SOURCE : https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-examples-using-sdks.html
+//
+
 namespace AWSSignatureV4_S3_Sample.Signers
 {
     /// <summary>

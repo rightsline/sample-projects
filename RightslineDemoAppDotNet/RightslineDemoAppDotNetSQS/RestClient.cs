@@ -11,8 +11,9 @@ using AWSSignatureV4_S3_Sample.Signers;
 using AWSSignatureV4_S3_Sample.Util;
 using Microsoft.VisualBasic.CompilerServices;
 using RightslineDemoAppDotNetSQS.Config;
-
-
+//
+// SOURCE : https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-examples-using-sdks.html
+//
 namespace RightslineDemoAppDotNetSQS
 {
     //For the purpose of this demo app, we will not be using the Amazon AWS SDK

@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
-
+//
+// SOURCE : https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-examples-using-sdks.html
+//
 namespace AWSSignatureV4_S3_Sample.Util
 {
     /// <summary>
