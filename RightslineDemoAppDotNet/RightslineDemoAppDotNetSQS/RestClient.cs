@@ -1,6 +1,7 @@
 ﻿using RightslineDemoAppDotNetSQS.Config;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 
 
@@ -15,6 +16,8 @@ namespace RightslineDemoAppDotNetSQS
         public static void CreateUrl()
         {
             string url = BaseUrl + ConfigSetup.AccountId + "/" + ConfigSetup.QueueName + "/";
+            HttpClient client = new HttpClient();
+            HttpRequestMessage req = new HttpRequestMessage();
         }
     }
 }

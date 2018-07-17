@@ -1,6 +1,8 @@
-﻿using RightslineDemoAppDotNetSQS.Config;
+﻿
+using RightslineDemoAppDotNetSQS.Config;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Cryptography;
@@ -36,11 +38,13 @@ namespace RightslineDemoAppDotNetSQS
         private static byte[] HMACSHA256Hash(byte[] key, string targetString)
         {
             var hmacHash = new HMACSHA256(key);
+            hmacHash.Initialize();
             return hmacHash.ComputeHash(Encoding.UTF8.GetBytes(targetString));
         }
 
         private static byte[] CreateSignatueKey(string key, string dateStamp, string serviceName)
         {
+            
             byte[] kSecret = Encoding.UTF8.GetBytes("AWS4" + key);
             byte[] kDate = HMACSHA256Hash(kSecret, dateStamp);
             byte[] kRegion = HMACSHA256Hash(kDate, ConfigSetup.Region);
@@ -53,7 +57,7 @@ namespace RightslineDemoAppDotNetSQS
             var t = DateTimeOffset.UtcNow;
             var amzdate = t.ToString("yyyyMMddTHHmmssZ");
             request.Headers.Add("x-amz-date", amzdate);
-            var datestamp = t.ToString("yyyyMMdd");
+            var datestamp = t.ToString("yyyyMMdd", CultureInfo.InvariantCulture);
 
             var canonical_request = new StringBuilder();
             canonical_request.Append(request.Method + "\n");
@@ -67,11 +71,11 @@ namespace RightslineDemoAppDotNetSQS
 
             foreach (var header in request.Headers.OrderBy(x => x.Key.ToLower()))
             {
-                canonical_request.Append(header.Key.ToLowerInvariant());
+                canonical_request.Append(header.Key.ToLower());
                 canonical_request.Append(":");
                 canonical_request.Append(string.Join(",", header.Value.Select(s => s.Trim())));
                 canonical_request.Append("\n");
-                signedHeadersList.Add(header.Key.ToLowerInvariant());
+                signedHeadersList.Add(header.Key.ToLower());
             }
 
             canonical_request.Append("\n");
@@ -105,5 +109,6 @@ namespace RightslineDemoAppDotNetSQS
             var canonicalQueryParams = string.Join("&", queryParams);
             return canonicalQueryParams;
         }
+                
     }
 }
