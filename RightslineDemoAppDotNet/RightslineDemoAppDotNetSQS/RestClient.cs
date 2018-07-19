@@ -23,6 +23,7 @@ namespace RightslineDemoAppDotNetSQS
     {
         private static string BaseUrl = "https://sqs.us-west-2.amazonaws.com/";
         private static Dictionary<string, string> config = ConfigSetup.GetConfigFile();
+        private static int SecondsToPoll = 4;
 
         public static void GetSQSMessages()
         {
@@ -58,7 +59,7 @@ namespace RightslineDemoAppDotNetSQS
         [STAThread]
         public static async void StartBackgroundMonitoring()
         {
-            Timer t = new Timer(4000); // 1 sec = 1000, 60 sec = 60000
+            Timer t = new Timer(SecondsToPoll * 4); // 1 sec = 1000, 60 sec = 60000
             t.AutoReset = true;
             t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
             t.Start();
