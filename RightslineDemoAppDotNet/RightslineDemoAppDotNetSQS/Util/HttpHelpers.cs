@@ -21,7 +21,7 @@ namespace AWSSignatureV4_S3_Sample.Util
         /// <param name="httpMethod"></param>
         /// <param name="headers"></param>
         /// <param name="requestBody"></param>
-        public static void InvokeHttpRequest(Uri endpointUri,
+        public static string InvokeHttpRequest(Uri endpointUri,
                                              string httpMethod,
                                              IDictionary<string, string> headers,
                                              string requestBody)
@@ -44,7 +44,7 @@ namespace AWSSignatureV4_S3_Sample.Util
                     }
                 }
 
-                CheckResponse(request);
+                return CheckResponse(request);
             }
             catch (WebException ex)
             {
@@ -56,6 +56,7 @@ namespace AWSSignatureV4_S3_Sample.Util
                         Console.WriteLine("\n-- HTTP call failed with exception '{0}', status code '{1}'", errorMsg, response.StatusCode);
                     }
                 }
+                return "Failed Call";
             }
         }
 
@@ -90,23 +91,24 @@ namespace AWSSignatureV4_S3_Sample.Util
             return request;
         }
 
-        public static void CheckResponse(HttpWebRequest request)
+        public static string CheckResponse(HttpWebRequest request)
         {
             // Get the response and read any body into a string, then display.
             using (var response = (HttpWebResponse)request.GetResponse())
             {
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    Console.WriteLine("\n-- HTTP call succeeded");
+                    //Console.WriteLine("\n-- HTTP call succeeded");
                     var responseBody = ReadResponseBody(response).Replace("&quot;", "\"");
                     if (!string.IsNullOrEmpty(responseBody))
                     {
-                        Console.WriteLine("\n-- Response body:");
-                        Console.WriteLine(responseBody);                        
+                        //Console.WriteLine("\n-- Response body:");
+                        return (responseBody);
                     }
+                    else return "No response";
                 }
                 else
-                    Console.WriteLine("\n-- HTTP call failed, status code: {0}", response.StatusCode);
+                    return string.Format("\n-- HTTP call failed, status code: {0}", response.StatusCode);
             }
         }
 

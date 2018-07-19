@@ -12,14 +12,8 @@ using System.Web;
 namespace RightslineDemoAppDotNetSQS.Config
 {
     public class ConfigSetup
-    {
-        public static string AccountId { get; set; }
-        public static string QueueName { get; set; }
-        public static string AccessKey { get; set; }
-        public static string SecretKey { get; set; }
-        public static string Region { get; set; }
+    {  
         private const string Algorithm = "AWS4-HMAC-SHA256";
-
         public static Dictionary<string, string> GetConfigFile()
         {
             var config = new Dictionary<string, string>();
@@ -30,11 +24,11 @@ namespace RightslineDemoAppDotNetSQS.Config
             try
             {
                 var credentials = JObject.Parse(File.ReadAllText(filePath));
-                AccountId = credentials.GetValue("AccountId").ToString();
-                QueueName = credentials.GetValue("QueueName").ToString();
-                AccessKey = credentials.GetValue("AccessKey").ToString();
-                SecretKey = credentials.GetValue("SecretKey").ToString();
-                Region = credentials.GetValue("Region").ToString();
+                var AccountId = credentials.GetValue("AccountId").ToString();
+                var QueueName = credentials.GetValue("QueueName").ToString();
+                var AccessKey = credentials.GetValue("AccessKey").ToString();
+                var SecretKey = credentials.GetValue("SecretKey").ToString();
+                var Region = credentials.GetValue("Region").ToString();
                 
                 config.Add("AccountId", AccountId);
                 config.Add("QueueName", QueueName);
