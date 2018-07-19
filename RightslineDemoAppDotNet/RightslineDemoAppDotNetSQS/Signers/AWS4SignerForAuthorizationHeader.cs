@@ -95,7 +95,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
                                                        canonicalizedHeaderNames,
                                                        canonicalizedHeaders,
                                                        bodyHash);
-            Console.WriteLine("\nCanonicalRequest:\n{0}", canonicalRequest);
+            //Console.WriteLine("\nCanonicalRequest:\n{0}", canonicalRequest);
 
             // generate a hash of the canonical request, to go into signature computation
             var canonicalRequestHashBytes
@@ -114,7 +114,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
             stringToSign.AppendFormat("{0}-{1}\n{2}\n{3}\n", SCHEME, ALGORITHM, dateTimeStamp, scope);
             stringToSign.Append(ToHexString(canonicalRequestHashBytes, true));
 
-            Console.WriteLine("\nStringToSign:\n{0}", stringToSign);
+            //Console.WriteLine("\nStringToSign:\n{0}", stringToSign);
 
             // compute the signing key
             var kha = new HMACSHA256();
@@ -123,7 +123,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
             // compute the AWS4 signature and return it
             var signature = kha.ComputeHash(Encoding.UTF8.GetBytes(stringToSign.ToString()));
             var signatureString = ToHexString(signature, true);
-            Console.WriteLine("\nSignature:\n{0}", signatureString);
+            //Console.WriteLine("\nSignature:\n{0}", signatureString);
 
             var authString = new StringBuilder();
             authString.AppendFormat("{0}-{1} ", SCHEME, ALGORITHM);
@@ -132,7 +132,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
             authString.AppendFormat("Signature={0}", signatureString);
 
             var authorization = authString.ToString();
-            Console.WriteLine("\nAuthorization:\n{0}", authorization);
+            //Console.WriteLine("\nAuthorization:\n{0}", authorization);
 
             return authorization;
         }
