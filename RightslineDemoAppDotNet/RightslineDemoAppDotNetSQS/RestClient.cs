@@ -27,7 +27,7 @@ namespace RightslineDemoAppDotNetSQS
     {
         private static string BaseUrl = "https://sqs.us-west-2.amazonaws.com/";
         private static Dictionary<string, string> config = ConfigSetup.GetConfigFile();
-        private static int SecondsToPoll = 10;
+        private static int SecondsToPoll = 5;
         private static string Regex = "\\{(.*?)\\}<";
         private static int MessagesToReceieve = 10;
 
@@ -73,11 +73,14 @@ namespace RightslineDemoAppDotNetSQS
             t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
             t.Start();
         }
+        /// Valid entities
+        /// table, rightset, catalog-item, relationship, deal
         private static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            string entity = "catalog-item";
             var messages = GetSQSMessages();
             var jsonobjects = FilterXML(messages);
-            Notify(jsonobjects, "relationship");
+            Notify(jsonobjects, entity);
         }
         public static void DemoMonitor()
         {
@@ -103,22 +106,32 @@ namespace RightslineDemoAppDotNetSQS
             return jsonObjects;
         }
         /// <summary>
-        /// Writes to console whenever a message regarding a given an entity shows up.
+        /// Writes a message to the console whenever a message in the queue regarding a given an entity shows up
         /// </summary>
-        /// <param name="entityName"></param>
+        /// 
+        /// <param name="entityName">Name of the entity to be searching for</param>
         private static void Notify(List<JObject> messages, string entityName)
         {
-            Console.WriteLine("Poll at " + DateTimeOffset.UtcNow);
+            Console.WriteLine("Poll at " + DateTime.Now.ToString());
             int numMessages = 0;
-            foreach(JObject message in messages)
+            var entityregex = new Regex("v2\\/(.*?)\\/");
+            foreach (JObject message in messages)
             {
-                if (message["entityUrl"].ToString().Contains(entityName))
+                //message["entityUrl"].ToString().Contains(entityName)
+                
+                var messageEntity = entityregex.Match(message["entityUrl"].ToString()).Groups[1];
+                if (messageEntity.ToString().Equals(entityName))
                 {
                     numMessages++;
                     Console.WriteLine("A " + entityName + " was " + message["action"] + ", URL: " + message["entityUrl"]);
+                    numMessages++;
                 }
-                //Console.WriteLine(message["action"] +  "  " + message["entityUrl"] );
-                numMessages++;
+                //Uncomment this if you want to be notified of all other messsages in the queue
+                //else
+                //{
+                //    Console.WriteLine(message["action"] + "  " + message["entityUrl"]);
+                //}
+                
             }
             if(numMessages == 0)
             {
