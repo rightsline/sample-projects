@@ -23,7 +23,7 @@ namespace RightslineDemoAppDotNetSQS
     {
         private static string BaseUrl = "https://sqs.us-west-2.amazonaws.com/";
         private static Dictionary<string, string> config = ConfigSetup.GetConfigFile();
-        private static int SecondsToPoll = 4;
+        private const int SecondsToPoll = 4;
 
         public static void GetSQSMessages()
         {
@@ -53,15 +53,14 @@ namespace RightslineDemoAppDotNetSQS
             headers.Add("Authorization", authorization);
             
             string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
-            Console.WriteLine(response);
+            Console.WriteLine(response+"\n\n");
         }
 
         [STAThread]
         public static async void StartBackgroundMonitoring()
         {
-            Timer t = new Timer(SecondsToPoll * 1000); // 1 sec = 1000, 60 sec = 60000
-            t.AutoReset = true;
-            t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
+            Timer t = new Timer(SecondsToPoll * 1000) {AutoReset = true}; // 1 sec = 1000, 60 sec = 60000
+            t.Elapsed += t_Elapsed;
             t.Start();
         }
         private static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
