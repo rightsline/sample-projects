@@ -17,10 +17,10 @@ namespace RightslineDemoAppDotNetV2
             int deleteID = 1591;
             Console.WriteLine("Rightsline Demo v0.0.1");
             Console.WriteLine("");
-            string CatalogItemGetJson = RestClient.GetCatalogItemDemoMethod(featureID).Result;
+            string CatalogItemGetJson = RestClient.GetCatalogItemDemoMethod(1587).Result;
             Console.WriteLine(CatalogItemGetJson);
             //string CatalogItemPostID = RestClient.PostCatalogItemDemoMethod().Result;
-            //Console.WriteLine("New Catalog Item ID: " + CatalogItemGetJson);
+            //Console.WriteLine("New Catalog Item ID: " + CatalogItemPostID);
 
 
 

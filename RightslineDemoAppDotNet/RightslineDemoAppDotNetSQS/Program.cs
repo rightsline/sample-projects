@@ -10,9 +10,9 @@ namespace RightslineDemoAppDotNetSQS
     {
         static void Main(string[] args)
         {
-
-            RestClient.StartBackgroundMonitoring();
-            //RestClient.DemoMonitor();
+            //Console.WriteLine(RestClient.GetSQSMessages());
+            //RestClient.StartBackgroundMonitoring();
+            RestClient.DemoMonitor();
             var y = Console.Read();
         }
     }

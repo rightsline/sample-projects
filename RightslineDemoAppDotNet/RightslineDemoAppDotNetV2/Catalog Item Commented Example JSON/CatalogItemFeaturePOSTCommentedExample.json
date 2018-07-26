@@ -36,13 +36,15 @@
     //OPTIONS: Sundance, Berline, SXSW, Tribeca, Cannes, Toronto, AFM
     "target_market": "Sundance",
     //Must be url
-    "websites": "website.com",
+    //Currently not working, you'll have to manually input on the web app
+    //"websites": "website.com",
     "bank_name": "Bank Name",
     //Numeric value in minutes
     "running_time": "120",
     "target_year": "2018",
     //Must be url
-    "imdb_link": "imdb.com",
+    //Currently not working, you'll have to manually input on the web app
+    //"imdb_link": "imdb.com",
     "bank_address": "Bank Address",
     //Mandatory field
     "aka": "Alternative Feature Title",
@@ -50,8 +52,9 @@
     "mpaa_rating": "PG-13",
     //OPTIONS: Sundance, Berline, SXSW, Tribeca, Cannes, Toronto, AFM
     "launch_market": "Sundance",
+    //Currently not working, you'll have to manually input on the web app
     //Must be url
-    "facebook": "facebook.com",
+    //"facebook": "facebook.com",
     "bank_phone": "Bank phone number",
     //OPTIONS: Not Financed, Partially Financed, Fully Financed
     "financing_status": "Not Financed",
@@ -60,7 +63,8 @@
     //4 digit year
     "launch_year": "2017",
     //Must be url
-    "twitter": "twitter.com",
+    //Currently not working, you'll have to manually input on the web app
+    //"twitter": "twitter.com",
     //Must be numeric
     "bank_routing_number": "123456789",
     //Must be numeric
@@ -68,10 +72,12 @@
     //MM/DD/YYYY
     "original_air_date": "06/29/2018",
     "festival_premiere": "Festival Premiere",
-    "awards": "Awards|Awards2",
+    //Currently not working, you'll have to manually input on the web app
+    //Seperated by | for different awards
+    //"awards": "Awards|Awards2",
     "swift_code": "Swift Code",
-    //Options for locSym and divSym: USD, GBP, EUR
-    "global_box_office_gross": "{\"locAmt\":\"120\",\"locCur\":1,\"locSym\":\"USD\",\"divAmt\":\"120.00\",\"divCur\":1,\"divSym\":\"USD\"}",
+    //Options for currency: USD, GBP, EUR    
+    "global_box_office_gross": "USD 500",
     //4 Digit year
     "festival_year": "2018",
     "intermediary_for_cedit_to": "(Intermediary) For Credit to",
