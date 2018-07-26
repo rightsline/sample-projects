@@ -15,6 +15,7 @@ using Newtonsoft.Json;
 using System.Xml;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
+using System.Net;
 //
 // SOURCE : https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-examples-using-sdks.html
 //
@@ -40,12 +41,13 @@ namespace RightslineDemoAppDotNetSQS
             //This is our QA fifo queue, replace it with your queue's url
             var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
             var requestParameters = "Action=ReceiveMessage&MaxNumberOfMessages=" + MessagesToReceieve;
-            var uri = new Uri(endpointUri + "?" + requestParameters);
+            var uri = new Uri(endpointUri + "?" + requestParameters);            
             var headers = new Dictionary<string, string>()
             {
                 {AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256}
 //                {"content-type", "text/plain"}
             };
+            //Use the AWS4 signer to generate the signer and sign the request
             var signer = new AWS4SignerForAuthorizationHeader()
             {
                 EndpointUri = uri,
@@ -110,7 +112,7 @@ namespace RightslineDemoAppDotNetSQS
         }
         private static List<string> GetReceiptHandles(string messages)
         {
-            Regex filterRegex = new Regex("Handle>(.*?)<\\/Receipt");
+            Regex filterRegex = new Regex("ReceiptHandle>(.*?)<\\/Receipt");
             var receiptHandles = filterRegex.Matches(messages);
             var receipts = new List<string>();
             foreach (Match message in receiptHandles)
@@ -161,14 +163,16 @@ namespace RightslineDemoAppDotNetSQS
                 var regionUrlPart = string.Format("-{0}", region);
                 //This is our QA fifo queue, replace it with your queue's url
                 var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
-                Console.WriteLine(receipt);
-                var requestParameters = "Action=DeleteMessage&Version=2012-11-05&ReceiptHandle=" + receipt;
+                //Encode the receipt handle and add it to the url
+                var encodedReceipt = WebUtility.UrlEncode(receipt);
+                var requestParameters = "Action=DeleteMessage&ReceiptHandle=" + encodedReceipt;
                 var uri = new Uri(endpointUri + "?" + requestParameters);
                 var headers = new Dictionary<string, string>()
                 {
-                {AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256}
-//                {"content-type", "text/plain"}
+                    {AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256}
+//                  {"content-type", "text/plain"}
                 };
+                //Use the AWS4 signer to generate the signer and sign the request
                 var signer = new AWS4SignerForAuthorizationHeader()
                 {
                     EndpointUri = uri,
@@ -181,7 +185,8 @@ namespace RightslineDemoAppDotNetSQS
                 headers.Add("Authorization", authorization);
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
-                Console.WriteLine(response);
+
+                Console.WriteLine("Receipt handle deleted: " + receipt);
 
             }
         }
