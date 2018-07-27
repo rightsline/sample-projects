@@ -137,15 +137,14 @@ namespace RightslineDemoAppDotNetSQS
                 if (messageEntity.ToString().Equals(entityName))
                 {
                     numMessages++;
-                    Console.WriteLine("A " + entityName + " was " + message["action"] + ", URL: " + message["entityUrl"]);
+                    Console.WriteLine("A " + messageEntity + " was " + message["action"] + ", URL: " + message["entityUrl"]);
                     numMessages++;
-                }
+               }
                 //Uncomment this if you want to be notified of all other messsages in the response
                 //else
                 //{
                 //    Console.WriteLine(message["action"] + "  " + message["entityUrl"]);
-                //}
-                //DeleteMessage(message[""])
+                //}                
             }
             if (numMessages == 0)
             {
@@ -186,7 +185,7 @@ namespace RightslineDemoAppDotNetSQS
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
 
-                Console.WriteLine("Receipt handle deleted: " + receipt);
+                //Console.WriteLine("Receipt for message deleted: " + receipt);
 
             }
         }
