@@ -1,0 +1,110 @@
+{
+  "jsonExamples": [
+    //
+    // Sales Estimates Table Json Example
+    //
+    {
+      "parentRelationship": [
+        {
+          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019"
+        }
+      ],
+      "title": "Sales Estimates Record 2233",
+      "template": {
+        "fields": null, 
+        "templateId": 13, // Mandatory Field
+        "templateName": "Sales Estimates" // Mandatory Field
+      },
+      "status": {
+        "statusId": 1,// Mandatory Field
+        "statusName": "Usage Created"// Mandatory Field
+      },
+      "characteristics": {
+        "reporting_group": "United States",// Mandatory Field
+        "ask": "800",
+        "take_a": "700",
+        "withholdings": "5",
+        "notes": "dfsfggdf",
+        "currency": "USD"// Mandatory Field
+      }
+    },
+    //
+    // Location Table JSON Example
+    //
+
+    {
+      "parentRelationship": [
+        {
+          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+        }
+      ],
+      "title": "Location Record 2234",
+      "template": {
+        "fields": null,
+        "templateId": 17, // Mandatory Field
+        "templateName": "Location" // Mandatory Field
+      },
+      "status": {
+        "statusId": 1, // Mandatory Field
+        "statusName": "Usage Created" // Mandatory Field
+      },
+      "characteristics": {
+        "inventory_location": "test1",
+        "inventory_bar_code": "test2",
+        "inventory_location_description": "test2",
+        "inventory_link": "http://www.test.com"
+      }
+    },
+    //
+    // Key Dates (Catalog) Table JSON Example
+    //
+    {
+      "parentRelationship": [
+        {
+          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+        }
+      ],
+      "title": "Key Dates (Catalog) Record 2236",  // Mandatory Field
+      "template": {
+        "fields": null,
+        "templateId": 22,  // Mandatory Field
+        "templateName": "Key Dates (Catalog)"  // Mandatory Field
+      },
+      "status": {
+        "statusId": 1,
+        "statusName": "Created"
+      },
+      "characteristics": {
+        "date_type": "World Premiere", // Possible Date Types include "Start of PP", "Completion of PP", "Initial Commercial Release", "USA First Release", "World Premiere"
+        "date": "06/30/2018",
+        "notes": "World Premiere Test|World Premiere Test 2"
+      }
+    },
+    // 
+    // Reporting Allocations Table JSON Example
+    //
+    {
+      "parentRelationship": [
+        {
+          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+        }
+      ],
+      "title": "Reporting Allocations Record 2237", // Mandatory Field 
+      "template": {
+        "fields": null,
+        "templateId": 27, // Mandatory Field
+        "templateName": "Reporting Allocations" // Mandatory Field
+      },
+      "status": {
+        "statusId": 1, // Mandatory Field
+        "statusName": "Usage Active" // Mandatory Field
+      },
+      "characteristics": {
+        "group_name": "Star Wars",
+        "percentage": "5",
+        "value": "5000000",
+        "currency": "USD"
+      }
+    }
+  ]
+}
