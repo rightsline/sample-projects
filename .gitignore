@@ -1644,3 +1644,5 @@ venv/lib64
 venv/pip-selfcheck\.json
 
 venv/pyvenv\.cfg
+
+venv/
