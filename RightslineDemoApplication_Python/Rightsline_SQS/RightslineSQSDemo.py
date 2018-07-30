@@ -25,6 +25,9 @@ request_parameters = 'Action=ReceiveMessage&MaxNumberOfMessages=1'
 request_url = ""
 headers = {}
 
+# If you are looking for a certain entity type
+entity_id = 171
+
 
 def create_request(request_params):
     global request_url, headers
@@ -141,12 +144,13 @@ def func():
         # This attempts to get the body of the returned JSON from the get message
         data_1 = json.loads(soup.Body.string)
         print(data_1['entityId'])
+        if entity_id == data_1['entityId']:
 
-        # Once we've received the message, process it, and then delete it
+            # Once we've received the message, process it, and then delete it
 
-        # Make sure to encode the request parameters
-        f = {"Action": "DeleteMessage", "ReceiptHandle": soup.ReceiptHandle.string}
-        create_request(urllib.parse.urlencode(f))
+            # Make sure to encode the request parameters
+            f = {"Action": "DeleteMessage", "ReceiptHandle": soup.ReceiptHandle.string}
+            create_request(urllib.parse.urlencode(f))
 
     except KeyError:
         print("No EntityId")
