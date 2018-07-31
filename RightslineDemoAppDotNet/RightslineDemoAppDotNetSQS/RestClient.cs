@@ -21,7 +21,7 @@ using System.Net;
 //
 namespace RightslineDemoAppDotNetSQS
 {
-    //For the purpose of this demo app, we will not be using the Amazon AWS SDK
+    //For this demo app, we will not be using the Amazon AWS SDK
     //We recommend using the SDK but we have created this example in case you are restricted from using it
     public class RestClient
     {
@@ -65,8 +65,9 @@ namespace RightslineDemoAppDotNetSQS
             return response;
         }
 
+        //We start a thread to poll the FIFO queue every few seconds for new messsages 
         [STAThread]
-        public static async void StartBackgroundMonitoring()
+        public static void StartBackgroundMonitoring()
         {
             //This is a timer that will poll the SQS queue every X seconds
             Timer t = new Timer(SecondsToPoll * 1000); // 1 sec = 1000, 60 sec = 60000
@@ -74,8 +75,8 @@ namespace RightslineDemoAppDotNetSQS
             t.Elapsed += new System.Timers.ElapsedEventHandler(t_Elapsed);
             t.Start();
         }
-        /// Valid entities
-        /// table, rightset, catalog-item, relationship, deal
+        // Valid entities
+        // table, rightset, catalog-item, relationship, deal
         private static void t_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
             string entity = "catalog-item";
@@ -110,6 +111,7 @@ namespace RightslineDemoAppDotNetSQS
             }
             return jsonObjects;
         }
+        //Filters the XML message to retrieve receipt handles
         private static List<string> GetReceiptHandles(string messages)
         {
             Regex filterRegex = new Regex("ReceiptHandle>(.*?)<\\/Receipt");
@@ -151,6 +153,7 @@ namespace RightslineDemoAppDotNetSQS
                 Console.WriteLine("Recieved " + messages.Count + " messages. No messages regarding " + entityName + " entities were recieved");
             }
         }
+        //Starts a thread to send a message to the FIFO queue to delete messages that were receieved
         [STAThread]
         private static void DeleteMessage(List<string> receiptHandles)
         {
