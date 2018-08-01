@@ -1646,3 +1646,4 @@ venv/pip-selfcheck\.json
 venv/pyvenv\.cfg
 
 venv/
+/RighstlineDemoApplication_Java/Config/configV2.json
