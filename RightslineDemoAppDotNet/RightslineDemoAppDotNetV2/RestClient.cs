@@ -74,9 +74,7 @@ namespace RightslineDemoAppDotNetV2
         /// <returns>JSON object as string of the modified Catalog-Item</returns>
         public static async Task<string> PutCatalogItemDemo(int catalogItemId)
         {
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);
+            ClearHeadersAndAddAuthentication();
             var jsonObj = File.ReadAllText(CatalogItemEpisodePutExample);            
             var putTask = client.PutAsync(BaseConnectionString  + CatalogItem + catalogItemId, new StringContent(jsonObj.ToString(), Encoding.UTF8, "application/json"));
             var result = await putTask;
