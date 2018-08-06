@@ -18,7 +18,8 @@ namespace RightslineDemoAppDotNetV2.Config
             {
                 var credentials = JObject.Parse(File.ReadAllText(filePath));                
                 BasicAuthCredentials = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(credentials.GetValue("user") + ":" + credentials.GetValue("pass")));
-//                Console.WriteLine(BasicAuthCredentials);
+                
+                Console.WriteLine(BasicAuthCredentials);
             }
             catch(Exception e)
             {
