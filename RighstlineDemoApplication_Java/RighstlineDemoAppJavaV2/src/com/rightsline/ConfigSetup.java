@@ -13,7 +13,7 @@ import java.util.Base64;
 
 
 public class ConfigSetup {
-    public static String BasicAuth;
+    private static String BasicAuth;
 
     public static String getBasicAuth() {
         return BasicAuth;
