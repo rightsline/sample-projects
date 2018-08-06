@@ -1,0 +1,59 @@
+﻿//Any field that is not marked as mandatory can be removed from the JSON and the PUT request will not update the field
+//MANDATORY FIELDS: title, aka
+//This is an example of the bare minimum needed for a valid PUT request
+//{
+//  "title": "episodename",
+//  "template": {
+//    "templateId": 1
+//  }  
+//}
+// The ID is passed in as a query string the URL so it is not needed in the JSON
+{
+  "parentRelationship": null,
+  //Mandatory field
+  "title": "hvo-testepisode-1-revision",
+  "template": {
+    "fields": null,
+    // Mandatory field
+    // PUT requests will not update the type of catalog-item the entity is, it will not update an Episode to a Feature even if the templateId is changed
+    "templateId": 13,
+    "templateName": "Episode",
+    "processID": 0,
+    "processName": null
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    //OPTIONS: DCP 2K, DCP4K, HDCAM SR 444, HDCAM SR 422, HDCAM, DIGIBETA, DVCAM
+    "format": "HDCAM",
+    //OPTIONS: Action, Adventure, Animation, Biopic, Comedy, Contained, Drama, Documentary, Family, Fantasy, Foreign Language, Foreign Set, Heist/Caper, Horror, Period/Polical,
+    //Post-Apocalyptic, Romantic Comedy, Sci-Fi, Sports, Spy, Superhero, Supernatural, Thriller, War, Western, YA, Zombie, Creature, Young Adult, Remake
+    //Can be seperated by | or ,
+    "genre": "Action|Adventure|Animation",
+    //OPTIONS: HD, SD, UHD
+    "file_format_type": "UHD",
+    //Will overrite existing awards on the item, be sure to add existing awards to the put request if you don't want to remove them
+    //Awards are seperated by |
+    "awards": "Award 1| Award 2",
+    "original_air_date": "06/25/2018",
+    "release_date": "06/27/2018",
+    //OPTIONS: EIA-608 (DTVCC Transport) text stream, EIA-708 (DTVCC Transport) text stream, European Broadcasting Union (.STL) external files
+    //Timed Text Markup Language (.ITT) external files, D-Cinema Interop (.XML) external files, Screen Electronics (.PAC) external files
+    //Timed Text (v1.0) (.DFXP) external files, Subrip (.SRT) external files, Scenario Closed Captions (.SCC) external files
+    //Comma Separated Files (.CSV) external files
+    "subtitle_format": "EIA-708 (DTVCC Transport) text stream",
+    //OPTIONS: Afghan/Pashtu, Afrikaans, Albanian, Arabic, Assamese, Bangla, Bengali, Bhojpuri, Bosnian, Bulgarian, Burmese, Cantonese, Catalan, Chinese
+    //Chinese (Mandarin Simp), Chinese (Mandarin Trad), Chinese (Mandarin), Chinese (Taiwanese Mand.), Chinese (Taiwanese), Chinese (Mandarin PRC)
+    //Corsican, Croatian, Czech, Danish, Dutch,  Dutch (Netherlands),  English,  English (Australian), English (Scottish), English (UK), English (US)
+    //Estonian, Farsi, Finnish, Flemish, French,  French (Canadian), French (Parisian),  Gaelic,  Gaelic (Irish), Gaelic (Scots),  Georgian, German,  German
+    //(Austrian), German (Germany), German (Swiss), Greek, Gujarati, Hebrew, Hindi, Hungarian, Icelandic, Indonesian, Inuktitut, Italian, Japanese, Kannada
+    //Khmer, Korean, Kurdish, Lao, Latvian, Lithuanian, Macedonian, Malay, Malayalam, Mandarin, Maori, Marathi, Nepali, Northern Sotho, Norwegian, Oriya, Polish
+    //Portuguese, Portuguese (Brazil), Portuguese (Portugal), Punjabi, Romanian, Russian, Serbian, Serbo-Croatian, Sindi, Sinhala, Slovak, Slovenian, Spanish
+    //Spanish (Argentinean), Spanish (Castilian), Spanish (Chilean), Spanish (Cuban), Spanish (Latin American), Spanish (Mexican), Spanish (Puerto Rican)
+    //Swahili, Swedish, Tagalog, Tamil, Telugu, Thai, Tibetan, Turkish, Ukranian, Undefined, Urdu, Vietnamese, Welsh, Yiddish, Yugoslavian, Zulu
+    //LOCAL LANGUAGE, OTHER
+    "subtitle_language": "English (US)"
+  }
+}
