@@ -128,8 +128,9 @@ def func():
     try:
         data = json.loads(soup.Body.string)
         print(data['entityId'])
+        print(data['entityUrl'])
     except(KeyError):
-        print("No EntityId")
+        print("No entityId or entityUrl")
     except(AttributeError):
         print("Object has no Body")
 

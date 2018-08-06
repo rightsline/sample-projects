@@ -262,3 +262,6 @@ __pycache__/
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV2/Config/config.json
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Config/config.json
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetSQS/Config/config.json
+RightslineDemoApplication_Python/venv/
+RightslineDemoApplication_Python/Rightsline_API_V2/config.json
+RightslineDemoApplication_Python/Rightsline_SQS/config.json

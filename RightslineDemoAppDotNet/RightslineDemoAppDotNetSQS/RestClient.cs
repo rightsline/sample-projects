@@ -127,10 +127,10 @@ namespace RightslineDemoAppDotNetSQS
                     numMessages++;
                 }
                 //Uncomment this if you want to be notified of all other messsages in the queue
-                //else
-                //{
-                //    Console.WriteLine(message["action"] + "  " + message["entityUrl"]);
-                //}
+                else
+                {
+                    Console.WriteLine(message["action"] + "  " + message["entityUrl"]);
+                }
                 
             }
             if(numMessages == 0)
