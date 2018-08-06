@@ -4,8 +4,6 @@ package com.rightsline;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Base64;
 
@@ -13,10 +11,10 @@ import java.util.Base64;
 
 
 public class ConfigSetup {
-    private static String BasicAuth;
+    private static String basicAuth;
 
     public static String getBasicAuth() {
-        return BasicAuth;
+        return basicAuth;
     }
 
     public static void getConfigFile(){
@@ -27,7 +25,7 @@ public class ConfigSetup {
             String user = credentials.get("user").getAsString();
             String pass = credentials.get("pass").getAsString();
             String combined = user + ":" + pass;
-            BasicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());
+            basicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());
         }
         catch(Exception e){
             System.out.println("Please ensure that you have a valid configV2.json file in the" + folderPath + " Config folder ");
