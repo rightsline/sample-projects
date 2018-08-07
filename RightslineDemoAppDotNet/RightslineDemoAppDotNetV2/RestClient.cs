@@ -89,9 +89,7 @@ namespace RightslineDemoAppDotNetV2
         /// <returns></returns>
         public static async Task<string> DeleteCatalogItemDemo(int catalogItemId)
         {
-            client.DefaultRequestHeaders.Clear();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Add("Authorization", ConfigSetup.BasicAuthCredentials);            
+            ClearHeadersAndAddAuthentication();   
             var deleteTask = client.DeleteAsync(BaseConnectionString + CatalogItem + catalogItemId);
             var result = await deleteTask;
             return result.Content.ReadAsStringAsync().Result;

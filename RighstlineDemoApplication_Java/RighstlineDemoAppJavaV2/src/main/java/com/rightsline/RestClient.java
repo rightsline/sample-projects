@@ -1,49 +1,36 @@
 package com.rightsline;
-
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RestClient {
 
-    public static String BaseConnectionString = "http://api-qa.rightsline.com/v2/";
+    public static String BaseConnectionString = "https://api-qa.rightsline.com/v2/";
     static String CatalogItem = "catalog-item/";
     static String DemoTableItem = "table/";
     static HttpURLConnection client;
 
     public static void DemoMethod(){
-        System.out.println(SetUpClient("GET", BaseConnectionString, CatalogItem));
+        System.out.println(SetUpClient("GET", BaseConnectionString, CatalogItem, "1581"));
     }
 
-    public static String SetUpClient(String httpMethod, String targetURL, String entityType){
+    public static String SetUpClient(String httpMethod, String targetURL, String entityType, String itemId){
         try {
             //Create client
-            URL url = new URL(targetURL + entityType);
+            URL url = new URL(targetURL + entityType + itemId);
+            System.out.println(url.toString());
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod(httpMethod);
-            client.setRequestProperty("Content-Type",
-                    "application/json");
-            client.setRequestProperty("Content-Language", "en-US");
             client.setRequestProperty("Authorization", ConfigSetup.getBasicAuth());
-            client.setUseCaches(false);
-            client.setDoOutput(true);
-
-            //Send request
-            DataOutputStream wr = new DataOutputStream (
-                    client.getOutputStream());
-            wr.close();
-
-            client.connect();
-            //Get Response  
-            InputStream is = client.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\r');
+            System.out.println(ConfigSetup.getBasicAuth());
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(client.getInputStream()));
+            String inputLine;
+            StringBuffer response = new StringBuffer();
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
             }
-            rd.close();
+            in.close();
             return response.toString();
         } catch (Exception e) {
             e.printStackTrace();
