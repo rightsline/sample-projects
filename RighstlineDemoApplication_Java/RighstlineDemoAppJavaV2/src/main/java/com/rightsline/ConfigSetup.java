@@ -1,14 +1,10 @@
 package com.rightsline;
-//import org.json.*;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.FileReader;
 import java.util.Base64;
-
-
-
 
 public class ConfigSetup {
     private static String basicAuth;

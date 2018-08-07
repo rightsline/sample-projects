@@ -141,14 +141,6 @@ def func():
     soup = bs4.BeautifulSoup(returned, 'xml')
 
     try:
-<<<<<<< HEAD
-        data = json.loads(soup.Body.string)
-        print(data['entityId'])
-        print(data['entityUrl'])
-    except(KeyError):
-        print("No entityId or entityUrl")
-    except(AttributeError):
-=======
         # This attempts to get the body of the returned JSON from the get message
         data_1 = json.loads(soup.Body.string)
         print(data_1['entityId'])
@@ -162,9 +154,7 @@ def func():
 
     except KeyError:
         print("No EntityId")
-    except AttributeError:
->>>>>>> afcf516bcc99f59f1de539f7c7cad4c129aab485
-        print("Object has no Body")
+
 
 
 polling.poll(
