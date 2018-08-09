@@ -262,6 +262,11 @@ __pycache__/
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV2/Config/config.json
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Config/config.json
 /RightslineDemoAppDotNet/RightslineDemoAppDotNetSQS/Config/config.json
+<<<<<<< HEAD
+RightslineDemoApplication_Python/venv/
+RightslineDemoApplication_Python/Rightsline_API_V2/config.json
+RightslineDemoApplication_Python/Rightsline_SQS/config.json
+=======
 
 RightslineDemoApplication_Python/Rightsline_SQS/config\.json
 
@@ -1647,3 +1652,5 @@ venv/pyvenv\.cfg
 
 venv/
 /RighstlineDemoApplication_Java/Config/configV2.json
+>>>>>>> afcf516bcc99f59f1de539f7c7cad4c129aab485
+RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/Config/configV2.json

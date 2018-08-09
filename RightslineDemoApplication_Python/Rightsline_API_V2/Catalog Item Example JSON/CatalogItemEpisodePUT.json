@@ -1,0 +1,18 @@
+﻿{
+  "title": "hvo-testepisode-1-revision2",  
+  "template": {
+    "templateId": 13,
+    "templateName": "Episode"
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    "format": "HDCAM",
+    "genre": "Action, Adventure, Animation",
+    "file_format_type": "UHD",
+    "subtitle_format": "EIA-708 (DTVCC Transport) text stream",
+    "subtitle_language": "English (US)"
+  }  
+}

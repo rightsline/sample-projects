@@ -141,6 +141,7 @@ namespace RightslineDemoAppDotNetSQS
                     numMessages++;
                     Console.WriteLine("A " + messageEntity + " was " + message["action"] + ", URL: " + message["entityUrl"]);
                     numMessages++;
+
                }
                 //Uncomment this if you want to be notified of all other messsages in the response
                 //else
