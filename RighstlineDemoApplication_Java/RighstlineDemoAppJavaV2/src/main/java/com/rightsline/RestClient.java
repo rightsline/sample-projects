@@ -19,10 +19,10 @@ public class RestClient {
     private static String RelationshipPostExampleJson = "\\RightslineDemoAppJavaV2\\Relationship Example JSON\\RelationshipPost.json";
     private static String TablePostExampleJson = "\\RightslineDemoAppJavaV2\\Table Example JSON\\TablePostExample.json";
     public static void DemoMethod(){
-        System.out.println(GetRequestDemoMethod("Catalog-item/","1605"));
+        System.out.println(GetRequestDemoMethod("Catalog-item","1605"));
         PostCatalogItemEpisodeDemoMethod();
-        System.out.println(UpdateEntityDemoMethod("Catalog-item/", "1605", CatalogItemEpisodePutExampleJson));
-        DeleteEntityDemoMethod("Catalog-Item/", "1602");
+        System.out.println(UpdateEntityDemoMethod("Catalog-item", "1605", CatalogItemEpisodePutExampleJson));
+        DeleteEntityDemoMethod("Catalog-Item", "1602");
     }
     public static void PostCatalogItemEpisodeDemoMethod(){
         String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
@@ -47,7 +47,7 @@ public class RestClient {
     public static void DeleteEntityDemoMethod(String entityType, String itemId){
         try {
             //Create client
-            URL url = new URL(BaseConnectionString + entityType + itemId);
+            URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("DELETE");
             client.setRequestProperty("Authorization", ConfigSetup.getBasicAuth());
@@ -62,12 +62,7 @@ public class RestClient {
                 response.append(inputLine);
             }
             in.close();
-            if(Boolean.parseBoolean(response.toString())){
-                System.out.println("Entity #"+ itemId + " has been deleted");
-            }
-            else{
-                System.out.println("Failed to delete entity #" + itemId);
-            }
+            System.out.println("Entity #"+ itemId + " has been deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -87,7 +82,7 @@ public class RestClient {
     public static String UpdateEntityDemoMethod(String EntityType, String EntityId, String jsonFilePath){
         try {
             //Create client
-            URL url = new URL(BaseConnectionString + EntityType + EntityId);
+            URL url = new URL(BaseConnectionString + EntityType + "/" + EntityId);
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("PUT");
             client.setRequestProperty("Content-Type", "application/json");
@@ -134,7 +129,7 @@ public class RestClient {
     public static String GetRequestDemoMethod(String entityType, String itemId){
         try {
             //Create client
-            URL url = new URL(BaseConnectionString + entityType + itemId);
+            URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
             client = (HttpURLConnection) url.openConnection();
             client.setRequestMethod("GET");
             client.setRequestProperty("Authorization", ConfigSetup.getBasicAuth());
