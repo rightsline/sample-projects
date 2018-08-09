@@ -1,0 +1,18 @@
+﻿{  
+  "title": "Swiss Army Man Edited",
+  "template": {    
+    "templateId": 1,
+    "templateName": "Feature"
+  },
+  "characteristics": {
+    "release_year": "2099",    
+    "running_time": "97",
+    "target_year": "2016",
+    "imdb_link": "https://www.imdb.com/title/tt0298148/",
+    "aka": "Swiss Yeet Man",
+    "mpaa_rating": "PG-13",    
+    "financing_status": "Fully Financed",    
+    "genre": "Adventure, Comedy, Drama, Zombie",
+    "notes": "Edited to include Zombie Genre, updated imdb link, changed alternative title, changed mpaa rating, changed release year"
+  }
+}

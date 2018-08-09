@@ -1,0 +1,86 @@
+﻿//MANDATORY FIELDS: title, aka
+//Any fields not marked mandatory can be left out of the json and the PUT request will not update those fields
+//This is an example of the bare minimum needed for a valid PUT request
+//{
+//  "title": "test-emptyfeature",
+//  "template": {
+//    "templateId": 1
+//  }  
+//}
+
+// The ID is passed in as a query string the URL so it is not needed in the JSON
+{
+  "parentRelationship": null,  
+  "title": "Feature Title",
+  "template": {
+    "fields": null,
+    "templateId": 1,
+    "templateName": "Feature",
+    "processID": 0,
+    "processName": null
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    //4 digit year
+    "release_year": "2018",
+    //OPTIONS: Sundance, Berline, SXSW, Tribeca, Cannes, Toronto, AFM
+    "target_market": "Sundance",
+    //Must be url
+    "websites": "website.com",
+    "bank_name": "Bank Name",
+    //Numeric value in minutes
+    "running_time": "120",
+    "target_year": "2018",
+    //Must be url
+    "imdb_link": "imdb.com",
+    "bank_address": "Bank Address",
+    "aka": "Alternative Feature Title",
+    //OPTIONS: G, PG, PG-13, R, NC-17, Not Rated, X
+    "mpaa_rating": "PG-13",
+    //OPTIONS: Sundance, Berline, SXSW, Tribeca, Cannes, Toronto, AFM
+    "launch_market": "Sundance",
+    //Must be url
+    "facebook": "facebook.com",
+    "bank_phone": "Bank phone number",
+    //OPTIONS: Not Financed, Partially Financed, Fully Financed
+    "financing_status": "Not Financed",
+    //MM/DD/YYYY
+    "release_date": "06/28/2018",
+    //4 digit year
+    "launch_year": "2017",
+    //Must be url
+    "twitter": "twitter.com",
+    //Must be numeric
+    "bank_routing_number": "123456789",
+    //Must be numeric
+    "budget": "100",
+    //MM/DD/YYYY
+    "original_air_date": "06/29/2018",
+    "festival_premiere": "Festival Premiere",
+    "awards": "Awards|Awards2",
+    "swift_code": "Swift Code",
+    //Options for currency: USD, GBP, EUR
+    "global_box_office_gross": "USD 500",
+    //4 Digit year
+    "festival_year": "2018",
+    "intermediary_for_cedit_to": "(Intermediary) For Credit to",
+    //OPTIONS: Action, Adventure, Animation, Biopic, Comedy, Contained, Drama, Documentary, Family, Fantasy, Foreign Language, Foreign Set, Heist/Caper, Horror, Period/Polical,
+    //Post-Apocalyptic, Romantic Comedy, Sci-Fi, Sports, Spy, Superhero, Supernatural, Thriller, War, Western, YA, Zombie, Creature, Young Adult, Remake
+    //Can be seperated by | or ,
+    "genre": "Biopic|Drama|Family",
+    "intermediary_account_number": "(Intermediary) Account Number",
+    "notes": "Notes",
+    "for_benefit_of": "For Benefit of",
+    "action_items": "Action Items",
+    "account_number": "Account Number",
+    "overview_notes": "Overview notes"
+  },
+  //On a successful PUT the lastUpdated fields will be updated automatically  
+  "lastUpdatedById": 0,
+  "lastUpdatedDate": 0
+}
+
+

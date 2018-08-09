@@ -7,7 +7,7 @@
 # This version makes a GET request and passes the signature
 # in the Authorization header.
 import sys, os, base64, datetime, hashlib, hmac
-import requests, polling, bs4, json  # pip install requests
+import requests, polling, bs4, json, re  # pip install requests
 import urllib.parse
 
 # You'll also need to pip install lxml
@@ -26,7 +26,7 @@ request_url = ""
 headers = {}
 
 # If you are looking for a certain entity type
-entity_id = 171
+entity = "file"
 
 
 def create_request(request_params):
@@ -126,14 +126,17 @@ def create_request(request_params):
     print('Request URL = ' + request_url)
 
 
-create_request(request_parameters)
+# create_request(request_parameters)
 
 
 # This function is called by polling, and occurs every X seconds
 def func():
+    # This call the initial get from the FIFO Queue
+    create_request(request_parameters)
+
     # This gets the initial message from the queue
     returned = requests.get(request_url, headers=headers).text.replace("&quot;", "\"")
-    print(returned)
+    # print(returned)
 
     # Parse the XML that is returned with BeautifulSoup
     # You can also do this manually using Regex
@@ -143,18 +146,22 @@ def func():
     try:
         # This attempts to get the body of the returned JSON from the get message
         data_1 = json.loads(soup.Body.string)
-        print(data_1['entityId'])
-        if entity_id == data_1['entityId']:
+        root_entity_url = data_1["entityUrl"]
 
-            # Once we've received the message, process it, and then delete it
+        found_entity = re.findall("v2/.*?/", root_entity_url)[0]
+        found_entity = found_entity[found_entity.find("/") + 1:found_entity.rfind("/")]
+        if entity == found_entity:
+            print("A " + entity + " was " + data_1["action"] + ", URL: " + root_entity_url)
 
-            # Make sure to encode the request parameters
-            f = {"Action": "DeleteMessage", "ReceiptHandle": soup.ReceiptHandle.string}
-            create_request(urllib.parse.urlencode(f))
+        # Once we've received the message, process it, and then delete it
+        # Make sure to encode the request parameters
+        f = {"Action": "DeleteMessage", "ReceiptHandle": soup.ReceiptHandle.string}
+        create_request(urllib.parse.urlencode(f))
 
     except KeyError:
-        print("No EntityId")
-
+        print("???")
+    except AttributeError:
+        print("Content has no body")
 
 
 polling.poll(

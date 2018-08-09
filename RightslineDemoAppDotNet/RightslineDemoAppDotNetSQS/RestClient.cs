@@ -141,15 +141,7 @@ namespace RightslineDemoAppDotNetSQS
                     numMessages++;
                     Console.WriteLine("A " + messageEntity + " was " + message["action"] + ", URL: " + message["entityUrl"]);
                     numMessages++;
-<<<<<<< HEAD
-                }
-                //Uncomment this if you want to be notified of all other messsages in the queue
-                else
-                {
-                    Console.WriteLine(message["action"] + "  " + message["entityUrl"]);
-                }
-                
-=======
+
                }
                 //Uncomment this if you want to be notified of all other messsages in the response
                 //else
@@ -160,7 +152,6 @@ namespace RightslineDemoAppDotNetSQS
             if (numMessages == 0)
             {
                 Console.WriteLine("Recieved " + messages.Count + " messages. No messages regarding " + entityName + " entities were recieved");
->>>>>>> afcf516bcc99f59f1de539f7c7cad4c129aab485
             }
         }
         //Starts a thread to send a message to the FIFO queue to delete messages that were receieved
