@@ -92,6 +92,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
                     sb.Append(";");
                 sb.Append(header.ToLower());
             }
+            
             return sb.ToString();
         }
 
@@ -124,7 +125,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
                 var headerValue = CompressWhitespaceRegex.Replace(sortedHeaderMap[header], " ");
                 sb.AppendFormat("{0}:{1}\n", header, headerValue.Trim());
             }
-
+            
             return sb.ToString();
         }
 

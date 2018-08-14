@@ -96,7 +96,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
                                                        canonicalizedHeaders,
                                                        bodyHash);
             //Console.WriteLine("\nCanonicalRequest:\n{0}", canonicalRequest);
-
+            
             // generate a hash of the canonical request, to go into signature computation
             var canonicalRequestHashBytes
                 = CanonicalRequestHashAlgorithm.ComputeHash(Encoding.UTF8.GetBytes(canonicalRequest));
@@ -113,7 +113,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
 
             stringToSign.AppendFormat("{0}-{1}\n{2}\n{3}\n", SCHEME, ALGORITHM, dateTimeStamp, scope);
             stringToSign.Append(ToHexString(canonicalRequestHashBytes, true));
-
+            
             //Console.WriteLine("\nStringToSign:\n{0}", stringToSign);
 
             // compute the signing key
@@ -133,7 +133,7 @@ namespace AWSSignatureV4_S3_Sample.Signers
 
             var authorization = authString.ToString();
             //Console.WriteLine("\nAuthorization:\n{0}", authorization);
-
+            
             return authorization;
         }
     }
