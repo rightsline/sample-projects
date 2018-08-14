@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RightslineDemoAppDotNetV3.Config;
+using System;
 
 namespace RightslineDemoAppDotNetV3
 {
@@ -7,6 +8,10 @@ namespace RightslineDemoAppDotNetV3
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
+            ConfigSetup.GetConfigFile();
+            //string sessionToken = RestClient.GetSessionToken().Result;
+            //Console.WriteLine(sessionToken);
+            Console.WriteLine(RestClient.GetCatalogItemMethod("1051"));
         }
     }
 }
