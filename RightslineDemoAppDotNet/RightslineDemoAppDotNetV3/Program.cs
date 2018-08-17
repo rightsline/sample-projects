@@ -9,9 +9,15 @@ namespace RightslineDemoAppDotNetV3
         {
             Console.WriteLine("Hello World!");
             ConfigSetup.GetConfigFile();
-            //string sessionToken = RestClient.GetSessionToken().Result;
-            //Console.WriteLine(sessionToken);
-            Console.WriteLine(RestClient.GetCatalogItemMethod("1051"));
+
+            //Replace the following IDs with your own
+            //Console.WriteLine(RestClient.GetTableMethod("1890"));
+            //Console.WriteLine(RestClient.GetCatalogItemMethod("1051"));
+
+
+            //Console.WriteLine(RestClient.PostCatalogItemMethod("D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePOST.json"));
+            //Console.WriteLine(RestClient.DeleteCatalogItemMethod("1537"));
+            //Console.WriteLine(RestClient.UpdateCatalogItemMethod("1542", "D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePUT.json"));
         }
     }
 }

@@ -1,0 +1,12 @@
+{
+  "parentURL": "http://api-qa.rightsline.com/v2/deal/404", // Mandatory Field, can be any entity (deal, catalog-item, etc.)
+  //only Contacts with selected Templates for the Party on the Entity template are valid for the Entity -> Contact relationship
+  "childURL": "http://api-qa.rightsline.com/v2/contact/663896", // Mandatory Field
+  
+  "relationshipType": {
+    // Specifying 0 implies an explicit relationship, 1 implies an implicit relationship
+    // Any number besides those two denotes a PartyID
+    "relationshipTypeId": 1,
+    "relationshipTypeName": "Licensee"
+  }
+}
