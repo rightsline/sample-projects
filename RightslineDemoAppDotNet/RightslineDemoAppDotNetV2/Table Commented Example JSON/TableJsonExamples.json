@@ -6,7 +6,7 @@
     {
       "parentRelationship": [
         {
-          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019"
+          "parentURL": "http://api-dev.rightsline.com/v2/catalog-item/1019"
         }
       ],
       "title": "Sales Estimates Record 2233",
@@ -35,7 +35,7 @@
     {
       "parentRelationship": [
         {
-          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+          "parentURL": "http://api-dev.rightsline.com/v2/catalog-item/1019" // Mandatory Field
         }
       ],
       "title": "Location Record 2234",
@@ -61,7 +61,7 @@
     {
       "parentRelationship": [
         {
-          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+          "parentURL": "http://api-dev.rightsline.com/v2/catalog-item/1019" // Mandatory Field
         }
       ],
       "title": "Key Dates (Catalog) Record 2236",  // Mandatory Field
@@ -86,7 +86,7 @@
     {
       "parentRelationship": [
         {
-          "parentURL": "http://api-qa.rightsline.com/v2/catalog-item/1019" // Mandatory Field
+          "parentURL": "http://api-dev.rightsline.com/v2/catalog-item/1019" // Mandatory Field
         }
       ],
       "title": "Reporting Allocations Record 2237", // Mandatory Field 

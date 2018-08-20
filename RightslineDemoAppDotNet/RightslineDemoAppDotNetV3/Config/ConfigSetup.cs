@@ -10,7 +10,7 @@ namespace RightslineDemoAppDotNetV3.Config
         public static string SecretKey { get; set; }
         public static string ApiKey { get; set; }
         /// <summary>
-        /// This method sets up the credentials for the V2 API by reading a config.json file located in the Config folder
+        /// This method sets up the credentials for the V3 API by reading a config.json file located in the Config folder
         /// </summary>
         public static void GetConfigFile()
         {            

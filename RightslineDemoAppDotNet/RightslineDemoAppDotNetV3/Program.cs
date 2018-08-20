@@ -18,6 +18,8 @@ namespace RightslineDemoAppDotNetV3
             //Console.WriteLine(RestClient.PostCatalogItemMethod("D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePOST.json"));
             //Console.WriteLine(RestClient.DeleteCatalogItemMethod("1537"));
             //Console.WriteLine(RestClient.UpdateCatalogItemMethod("1542", "D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePUT.json"));
+
+            Console.WriteLine(RestClient.PostRelationshipMethod("D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Relationship Example JSON/RelationshipPost.json"));
         }
     }
 }
