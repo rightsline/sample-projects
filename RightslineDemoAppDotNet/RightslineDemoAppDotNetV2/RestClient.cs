@@ -18,7 +18,7 @@ namespace RightslineDemoAppDotNetV2
     /// </summary>
     public class RestClient
     {
-        static string BaseConnectionString = "http://api-qa.rightsline.com/v2/";
+        static string BaseConnectionString = "http://api-dev.rightsline.com/v2/";
         static string CatalogItem = "catalog-item/";
         static string DemoTableItem = "table/2249";
         static HttpClient client = new HttpClient();
@@ -162,7 +162,7 @@ namespace RightslineDemoAppDotNetV2
 
         #region Relationship Example Methods
 
-        public static string RelationshipPostExample = "Relationship Example JSON/RelationshipPost.json";
+        public static string RelationshipPostExample = "D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Relationship Example JSON/RelationshipPost.json";
         
         /// <summary>
         /// Async GET call to Rightsline's V2 API that will return details of a relationship

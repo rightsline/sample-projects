@@ -12,6 +12,7 @@ namespace RightslineDemoAppDotNetV2
         static void Main(string[] args)
         {
             ConfigSetup.GetConfigFile();
+            //These IDs are for our QA database, change them 
             int featureID = 1565;
             int episodeID = 1555;
             int deleteID = 1591;
@@ -22,7 +23,7 @@ namespace RightslineDemoAppDotNetV2
             //string CatalogItemPostID = RestClient.PostCatalogItemDemoMethod().Result;
             //Console.WriteLine("New Catalog Item ID: " + CatalogItemPostID);
 
-            
+
 
             //string getTableResult = RestClient.GetTable(2340).Result;
             //Console.WriteLine(getTableResult);
@@ -35,6 +36,8 @@ namespace RightslineDemoAppDotNetV2
 
             //string getRelationships = RestClient.GetRelationships().Result;
             //Console.WriteLine(getRelationships);
+            string post = RestClient.PostRelationships().Result;
+            Console.WriteLine(post);
 
 
         }
