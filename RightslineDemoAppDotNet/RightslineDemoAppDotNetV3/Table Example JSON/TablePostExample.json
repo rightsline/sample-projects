@@ -1,7 +1,7 @@
 {
   "parentRelationship": [
     {
-      "parentURL": "http://api-dev.rightsline.com/v2/catalog-item/1019"
+      "parentURL": "http://api-dev.rightsline.com/v3/catalog-item/1019"
     }
   ],
   "title": "Maciej's New Table",

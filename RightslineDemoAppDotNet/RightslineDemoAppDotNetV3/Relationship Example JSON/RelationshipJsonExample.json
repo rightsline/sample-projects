@@ -1,7 +1,7 @@
 {
-  "parentURL": "http://api-dev.rightsline.com/v2/deal/404", // Mandatory Field, can be any entity (deal, catalog-item, etc.)
+  "parentURL": "http://api-dev.rightsline.com/v3/deal/310", // Mandatory Field, can be any entity (deal, catalog-item, etc.)
   //only Contacts with selected Templates for the Party on the Entity template are valid for the Entity -> Contact relationship
-  "childURL": "http://api-dev.rightsline.com/v2/contact/663896", // Mandatory Field
+  "childURL": "http://api-dev.rightsline.com/v3/contact/686593", // Mandatory Field
   
   "relationshipType": {
     // Specifying 0 implies an explicit relationship, 1 implies an implicit relationship

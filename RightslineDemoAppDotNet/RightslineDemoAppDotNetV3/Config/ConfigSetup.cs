@@ -6,9 +6,11 @@ namespace RightslineDemoAppDotNetV3.Config
 {
     public static class ConfigSetup
     {        
-        public static string BasicAuthCredentials { get; set; }
+        public static string AccessKey { get; set; }
+        public static string SecretKey { get; set; }
+        public static string ApiKey { get; set; }
         /// <summary>
-        /// This method sets up the credentials for the V2 API by reading a config.json file located in the Config folder
+        /// This method sets up the credentials for the V3 API by reading a config.json file located in the Config folder
         /// </summary>
         public static void GetConfigFile()
         {            
@@ -16,8 +18,10 @@ namespace RightslineDemoAppDotNetV3.Config
             var filePath = Path.Combine(folderPath, "Config\\config.json");
             try
             {
-                var credentials = JObject.Parse(File.ReadAllText(filePath));                
-                BasicAuthCredentials = "Basic " + System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(credentials.GetValue("user") + ":" + credentials.GetValue("pass")));
+                var credentials = JObject.Parse(File.ReadAllText(filePath));
+                AccessKey = credentials.GetValue("accessKey").ToString();
+                SecretKey = credentials.GetValue("secretKey").ToString();
+                ApiKey = credentials.GetValue("xApiKey").ToString();
 //                Console.WriteLine(BasicAuthCredentials);
             }
             catch(Exception e)

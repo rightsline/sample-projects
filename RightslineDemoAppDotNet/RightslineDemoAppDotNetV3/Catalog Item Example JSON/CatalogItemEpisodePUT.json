@@ -1,0 +1,18 @@
+﻿{
+  "title": "Example Episode POST changed to PUT",  
+  "template": {
+    "templateId": 13,
+    "templateName": "Episode"
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    "format": "HDCAM",
+    "genre": [ "Action", "Adventure", "Horror" ],
+    "file_format_type": "UHD",
+    "subtitle_format": "EIA-708 (DTVCC Transport) text stream",
+    "subtitle_language": "English (US)"
+  }  
+}

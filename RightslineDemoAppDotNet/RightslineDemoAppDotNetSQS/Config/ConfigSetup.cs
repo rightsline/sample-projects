@@ -17,9 +17,7 @@ namespace RightslineDemoAppDotNetSQS.Config
         public static Dictionary<string, string> GetConfigFile()
         {
             var config = new Dictionary<string, string>();
-            var folderPath =
-                AppContext.BaseDirectory.Substring(0,
-                    AppContext.BaseDirectory.IndexOf("bin", StringComparison.Ordinal));
+            var folderPath = AppContext.BaseDirectory.Substring(0, AppContext.BaseDirectory.IndexOf("bin", StringComparison.Ordinal));
             var filePath = Path.Combine(folderPath, "Config\\config.json");
             try
             {
