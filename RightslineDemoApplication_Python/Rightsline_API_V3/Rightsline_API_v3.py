@@ -70,8 +70,12 @@ def generate_AWS_headers(method, request_params, payload=""):
     # Step 4: Create the canonical headers and signed headers. Header names
     # must be trimmed and lowercase, and sorted in code point order from
     # low to high. Note that there is a trailing \n.
-    canonical_headers = '\ncontent-type:application/json' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
+    if method != 'GET':
+        canonical_headers = '\ncontent-type:application/json' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
                         data["xApiKey"] + "\n"
+    else:
+        canonical_headers = '\ncontent-type:' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
+                            data["xApiKey"] + "\n"
     # Step 5: Create the list of signed headers. This lists the headers
     # in the canonical_headers list, delimited with ";" and in alpha order.
     # Note: The request can include any headers; canonical_headers and
@@ -205,8 +209,8 @@ def getRelationship(relationship_id):
 
 def postRelationship():
     with open("Relationship Example JSON/RelationshipPost.json", 'r') as file:
-        relationship_json = ''.join(file.readlines())[3:]
-        print(relationship_json)
+        relationship_json = ''.join(file.readlines())
+        print(relationship_json + "\n\n")
     headers = generate_AWS_headers("POST", "v3/relationship", payload=relationship_json)
 
     print(headers)
@@ -226,4 +230,6 @@ def deleteRelationship(relationship_id):
     print(returned.content.decode().replace('\\n', '\n'))
 
 
-putCatalogItem(1541)
+# putCatalogItem(1541)
+# postRelationship()
+getRelationship(48324735)

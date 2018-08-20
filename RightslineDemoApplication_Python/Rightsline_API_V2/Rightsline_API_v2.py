@@ -1,10 +1,10 @@
 import requests, json
 from requests.auth import HTTPBasicAuth
 
-with open('config.json', 'r') as file:
+with open('dev_config.json', 'r') as file:
     data = json.loads(''.join(file.readlines()))
 
-base_connection = "http://api-qa.rightsline.com/v2"
+base_connection = "http://api-dev.rightsline.com/v2"
 username = data["user"]
 password = data["pass"]
 
@@ -87,4 +87,5 @@ def deleteRelationship(relationship_number):
     print(request.content.decode())
 
 
+# postRelationship()
 postRelationship()
