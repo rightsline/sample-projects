@@ -17,7 +17,7 @@ public class RestClient {
     private static String CatalogItemEpisodePutExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
     private static String CatalogItemFeaturePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
     private static String RelationshipPostExampleJson = "\\Relationship Example JSON\\RelationshipPost.json";
-    private static String TablePostExampleJson = "\\RightslineDemoAppJavaV2\\Table Example JSON\\TablePostExample.json";
+    private static String TablePostExampleJson = "\\Table Example JSON\\TablePostExample.json";
 
     public static void DemoMethod() {
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));

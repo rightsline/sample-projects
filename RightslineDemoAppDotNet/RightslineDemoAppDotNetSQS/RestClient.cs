@@ -86,6 +86,7 @@ namespace RightslineDemoAppDotNetSQS
             var receipts = GetReceiptHandles(messages);
             DeleteMessage(receipts);
         }
+        //Test method to check the queue once for a relationship item and delete received messages
         public static void DemoMonitor()
         {
             var messages = GetSQSMessages();
