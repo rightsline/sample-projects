@@ -104,7 +104,6 @@ namespace RightslineDemoAppDotNetV2
         public static async Task<string> GetTable(int tableId)
         {
             ClearHeadersAndAddAuthentication();
-
             var stringTask = client.GetStringAsync(BaseConnectionString + "table/" + tableId);
             var result = await stringTask;
             return result;

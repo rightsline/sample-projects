@@ -15,11 +15,11 @@ namespace RightslineDemoAppDotNetV3
             //Console.WriteLine(RestClient.GetCatalogItemMethod("1051"));
 
 
-            //Console.WriteLine(RestClient.PostCatalogItemMethod("D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePOST.json"));
-            //Console.WriteLine(RestClient.DeleteCatalogItemMethod("1537"));
-            //Console.WriteLine(RestClient.UpdateCatalogItemMethod("1542", "D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Catalog Item Example JSON/CatalogItemEpisodePUT.json"));
+            //Console.WriteLine("New table created with id: " + RestClient.PostCatalogItemMethod("Catalog Item Example JSON/CatalogItemEpisodePOST.json"));
+            //Console.WriteLine(RestClient.DeleteCatalogItemMethod("1547"));
+            //Console.WriteLine(RestClient.UpdateCatalogItemMethod("1542", "Catalog Item Example JSON/CatalogItemEpisodePUT.json"));
 
-            Console.WriteLine(RestClient.PostRelationshipMethod("D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Relationship Example JSON/RelationshipPost.json"));
+            //Console.WriteLine(RestClient.PostRelationshipMethod("Relationship Example JSON/RelationshipPost.json"));
         }
     }
 }

@@ -15,7 +15,7 @@ public class ConfigSetup {
 
     public static void getConfigFile(){
         String folderPath = System.getProperty("user.dir");
-        String configFilePath = folderPath + "\\Config\\configV2.json";
+        String configFilePath = "./Config/configV2.json";
         try {
             JsonObject credentials = new JsonParser().parse(new FileReader(configFilePath)).getAsJsonObject();
             String user = credentials.get("user").getAsString();
@@ -24,8 +24,9 @@ public class ConfigSetup {
             basicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());
         }
         catch(Exception e){
-            System.out.println("Please ensure that you have a valid configV2.json file in the" + folderPath + " Config folder ");
+            System.out.println("Please ensure that you have a valid configV2.json file in the " + folderPath + " /Config folder ");
         }
+        System.out.println(basicAuth);
 //        System.out.println(getBasicAuth());
 //        String pageName = credentials.getJSONObject("pageInfo").getString("pageName");
     }

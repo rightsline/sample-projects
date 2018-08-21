@@ -6,23 +6,23 @@ import java.net.URL;
 
 public class RestClient {
 
-    public static String BaseConnectionString = "https://api-qa.rightsline.com/v2/";
+    public static String BaseConnectionString = "https://api-dev.rightsline.com/v2/";
 
 
     static HttpURLConnection client;
 
     //These are example JSON files that we have created
     //There are fields in the Feature example that are currently not working and will need to be removed
-    private static String CatalogItemEpisodePostExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
-    private static String CatalogItemEpisodePutExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
-    private static String CatalogItemFeaturePostExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
-    private static String RelationshipPostExampleJson = "\\RightslineDemoAppJavaV2\\Relationship Example JSON\\RelationshipPost.json";
-    private static String TablePostExampleJson = "\\RightslineDemoAppJavaV2\\Table Example JSON\\TablePostExample.json";
+    private static String CatalogItemEpisodePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
+    private static String CatalogItemEpisodePutExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
+    private static String CatalogItemFeaturePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
+    private static String RelationshipPostExampleJson = "\\Relationship Example JSON\\RelationshipPost.json";
+    private static String TablePostExampleJson = "\\Table Example JSON\\TablePostExample.json";
     public static void DemoMethod(){
-        System.out.println(GetRequestDemoMethod("Catalog-item","1605"));
-        PostCatalogItemEpisodeDemoMethod();
-        System.out.println(UpdateEntityDemoMethod("Catalog-item", "1605", CatalogItemEpisodePutExampleJson));
-        DeleteEntityDemoMethod("Catalog-Item", "1602");
+        System.out.println(GetRequestDemoMethod("catalog-item","1541"));
+        //PostCatalogItemEpisodeDemoMethod();
+        //System.out.println(UpdateEntityDemoMethod("catalog-item", "1548", CatalogItemEpisodePutExampleJson));
+        //DeleteEntityDemoMethod("catalog-Item", "1548");
     }
     public static void PostCatalogItemEpisodeDemoMethod(){
         String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
