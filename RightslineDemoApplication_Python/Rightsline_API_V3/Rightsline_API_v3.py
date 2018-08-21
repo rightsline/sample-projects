@@ -286,6 +286,3 @@ def deleteRelationship(relationship_id):
 
     # Step 3: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
-
-
-getCatalogItem(1051)
