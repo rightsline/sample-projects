@@ -82,8 +82,8 @@ public class RestClient {
     }
 
     /**
-     * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
-     *
+     * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
+     *  Returns the updated entity's information in xml string format
      * @param EntityType
      * @param EntityId
      * @param jsonFilePath
@@ -136,6 +136,7 @@ public class RestClient {
     /**
      * Creates an HTTP GET request and returns a JSON string
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
+     * Returns the entity in XML string format
      */
     public static String GetRequestDemoMethod(String entityType, String itemId) {
         try {
@@ -168,7 +169,8 @@ public class RestClient {
 
     /**
      * Method to send a Post Request for a new entity to be created.
-     * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
+     * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
+     * Returns the id of the created entity
      */
 
     public static String PostEntityDemoMethod(String EntityType, String jsonFilePath) {

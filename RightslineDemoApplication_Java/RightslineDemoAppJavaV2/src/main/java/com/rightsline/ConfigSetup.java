@@ -26,7 +26,13 @@ public class ConfigSetup {
         } catch (Exception e) {
             System.out.println("Please ensure that you have a valid config file in the Config folder ");
         }
+<<<<<<< HEAD:RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/src/main/java/com/rightsline/ConfigSetup.java
 
         return !basicAuth.isEmpty();
+=======
+		return !basicAuth.isEmpty();
+//        System.out.println(getBasicAuth());
+
+>>>>>>> 2045031708aa3a91eaf182cdebe5f118a0df89a7:RightslineDemoApplication_Java/RightslineDemoAppJavaV2/src/main/java/com/rightsline/ConfigSetup.java
     }
 }
