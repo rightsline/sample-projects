@@ -3,27 +3,33 @@ import json, requests, hashlib, hmac, sys, datetime
 with open('config.json', 'r') as file:
     data = json.loads(''.join(file.readlines()))
 
+# This portion of the code sends a request to the Rightsline API for temporary AWS credentials. These are single use credentials.
 url = "https://api-dev.rightsline.com/v3/auth/temporary-credentials"
 json_to_send = "{\n\t\"accessKey\":\"%s\",\n\t\"secretKey\":\"%s\"\n}" % (data["accessKey"], data["secretKey"])
+
+# These are the headers that are sent with the initial AWS temporary credentials
 initial_headers = {
     'content-type': "application/json",
     'x-api-key': data["xApiKey"]
 }
+# This sends a request to the Rightsline API with the json and headers
 response = requests.post(url, data=json_to_send, headers=initial_headers)
 print(response.content.decode())
+
+# The API will return a json, which needs to be saved and interpreted with the json library
 response = json.loads(response.content.decode())
 
 accessKey = response["accessKey"]
 secretKey = response["secretKey"]
 securityToken = response["sessionToken"]
+
+# The API will also return an expiration, but it's not required for any further code.
 expiration = response["expiration"]
+
 base_connection = "http://api-dev.rightsline.com/v3"
-# method = 'GET'
 service = 'execute-api'
 region = "us-east-1"
 host = 'api-dev.rightsline.com'
-endpoint = "http://api-dev.rightsline.com/v3/catalog-item/1051"
-endpoint1 = "http://api-dev.rightsline.com/v3/table/table-templates"
 
 
 def generate_AWS_headers(method, request_params, payload=""):
@@ -71,9 +77,11 @@ def generate_AWS_headers(method, request_params, payload=""):
     # must be trimmed and lowercase, and sorted in code point order from
     # low to high. Note that there is a trailing \n.
     if method != 'GET':
+        # All requests besides a GET will require a content type (Usually application/json)
         canonical_headers = '\ncontent-type:application/json' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
-                        data["xApiKey"] + "\n"
+                            data["xApiKey"] + "\n"
     else:
+        # GET requests don't need a content type and will deny the request if provided one
         canonical_headers = '\ncontent-type:' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
                             data["xApiKey"] + "\n"
     # Step 5: Create the list of signed headers. This lists the headers
@@ -85,7 +93,6 @@ def generate_AWS_headers(method, request_params, payload=""):
 
     # Step 6: Create payload hash (hash of the request body content). For GET
     # requests, the payload is an empty string ("").
-    print(payload)
     if method == 'GET' or method == 'DELETE':
         payload_hash = hashlib.sha256().hexdigest()
 
@@ -128,93 +135,140 @@ def generate_AWS_headers(method, request_params, payload=""):
     return headers
 
 
-def getCatalogItem():
-    # request = requests.get(base_connection + "/catalog-item/" + str(catalog_item_number),
-    #                        auth=HTTPBasicAuth(username, password))
-    # print(request.content.decode())
-    headers = generate_AWS_headers("GET", "v3/catalog-item/1051")
-    returned = requests.get(endpoint, headers=headers)
+def getCatalogItem(catalog_item_number):
+    # Step 1: Generate the headers
+    headers = generate_AWS_headers("GET", "v3/catalog-item/" + str(catalog_item_number))
+
+    # Step 2: Send the request
+    returned = requests.get(base_connection + '/catalog-item/' + str(catalog_item_number), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode())
 
 
 def postCatalogItem():
+    # Step 1: Create or Read in the JSON file
     with open("Catalog Item Example JSON/CatalogItemFeaturePOST.json", 'r') as file:
+        # Some JSON files have weird encoding and require the first three characters to be cut off before parsing.
         catalog_json = ''.join(file.readlines())[3:]
-        print(catalog_json)
+
+    # Step 2: Generate the headers
+    # PUT and POST requests require a payload of the json that is going to be sent for the headers
     headers = generate_AWS_headers("POST", "v3/catalog-item", payload=catalog_json)
 
-    print(headers)
+    # Step 3: Send the request
     returned = requests.post(base_connection + "/catalog-item", data=catalog_json, headers=headers)
+
+    # Step 4: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def putCatalogItem(catalog_item):
+    # Step 1: Create or Read in the JSON file
     with open("Catalog Item Example JSON/CatalogItemEpisodePUT.json", 'r') as file:
+        # Some JSON files have weird encoding and require the first three characters to be cut off before parsing.
         catalog_json = ''.join(file.readlines())[3:]
-        print(catalog_json)
+
+    # Step 2: Generate the headers
+    # PUT and POST requests require a payload of the json that is going to be sent for the headers
     headers = generate_AWS_headers("PUT", "v3/catalog-item/" + str(catalog_item), payload=catalog_json)
 
-    print(headers)
+    # Step 3: Send the request
     returned = requests.put(base_connection + "/catalog-item/" + str(catalog_item), data=catalog_json, headers=headers)
+
+    # Step 4: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def deleteCatalogItem(catalog_item):
+    # Step 1: Generate the headers
     headers = generate_AWS_headers("DELETE", "v3/catalog-item/" + str(catalog_item))
-    print(headers)
+
+    # Step 2: Send the request
     returned = requests.delete(base_connection + "/catalog-item/" + str(catalog_item), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def getTable(table_id):
+    # Step 1: Generate the headers
     headers = generate_AWS_headers("GET", "v3/table/" + str(table_id))
+
+    # Step 2: Send the request
     returned = requests.get(base_connection + "/table/" + str(table_id), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode())
 
 
 def postTable():
+    # Step 1: Create or Read in the JSON file
     with open("Table Example JSON/TablePostExample.json", 'r') as file:
         table_json = ''.join(file.readlines())
-        print(table_json)
+
+    # Step 2: Generate the headers
+    # PUT and POST requests require a payload of the json that is going to be sent for the headers
     headers = generate_AWS_headers("POST", "v3/table", payload=table_json)
 
-    print(headers)
+    # Step 3: Send the request
     returned = requests.post(base_connection + "/table", data=table_json, headers=headers)
+
+    # Step 4: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def putTable(table_id):
+    # Step 1: Create or Read in the JSON file
     with open("Table Example JSON/TablePutExample.json", 'r') as file:
         table_json = ''.join(file.readlines())
-        print(table_json)
+
+    # Step 2: Generate the headers
+    # PUT and POST requests require a payload of the json that is going to be sent for the headers
     headers = generate_AWS_headers("PUT", "v3/table/" + str(table_id), payload=table_json)
 
-    print(headers)
+    # Step 3: Send the request
     returned = requests.put(base_connection + "/table/" + str(table_id), data=table_json, headers=headers)
+
+    # Step 4: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def deleteTable(table_id):
+    # Step 1: Generate the headers
     headers = generate_AWS_headers("DELETE", "v3/table/" + str(table_id))
-    print(headers)
+
+    # Step 2: Send the request
     returned = requests.delete(base_connection + "/table/" + str(table_id), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
 def getRelationship(relationship_id):
+    # Step 1: Generate the headers
     headers = generate_AWS_headers("GET", "v3/relationship/" + str(relationship_id))
+
+    # Step 2: Send the request
     returned = requests.get(base_connection + "/relationship/" + str(relationship_id), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode())
 
 
 def postRelationship():
+    # Step 1: Create or Read in the JSON file
     with open("Relationship Example JSON/RelationshipPost.json", 'r') as file:
         relationship_json = ''.join(file.readlines())
-        print(relationship_json + "\n\n")
+
+    # Step 2: Generate the headers
+    # PUT and POST requests require a payload of the json that is going to be sent for the headers
     headers = generate_AWS_headers("POST", "v3/relationship", payload=relationship_json)
 
-    print(headers)
+    # Step 3: Send the request
     returned = requests.post(base_connection + "/relationship", data=relationship_json, headers=headers)
+
+    # Step 4: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
 
 
@@ -224,14 +278,11 @@ def putRelationship():
 
 
 def deleteRelationship(relationship_id):
+    # Step 1: Generate the headers
     headers = generate_AWS_headers("DELETE", "v3/relationship/" + str(relationship_id))
-    print(headers)
+
+    # Step 2: Send the request
     returned = requests.delete(base_connection + "/relationship/" + str(relationship_id), headers=headers)
+
+    # Step 3: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
-
-
-# putCatalogItem(1541)
-# postRelationship()
-# getRelationship(48324735)
-# postTable()
-deleteTable(2678)
