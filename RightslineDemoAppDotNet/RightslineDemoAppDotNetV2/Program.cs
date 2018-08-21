@@ -36,8 +36,10 @@ namespace RightslineDemoAppDotNetV2
 
             //string getRelationships = RestClient.GetRelationships().Result;
             //Console.WriteLine(getRelationships);
-            string post = RestClient.PostRelationships().Result;
+            //string post = RestClient.PostRelationships().Result;
+            string post = RestClient.PostTable().Result;
             Console.WriteLine(post);
+            
 
 
         }
