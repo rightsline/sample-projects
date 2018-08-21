@@ -16,15 +16,14 @@ public class RestClient {
     private static String CatalogItemEpisodePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
     private static String CatalogItemEpisodePutExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
     private static String CatalogItemFeaturePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
-    private static String RelationshipPostExampleJson = "\\RightslineDemoAppJavaV2\\Relationship Example JSON\\RelationshipPost.json";
+    private static String RelationshipPostExampleJson = "\\Relationship Example JSON\\RelationshipPost.json";
     private static String TablePostExampleJson = "\\RightslineDemoAppJavaV2\\Table Example JSON\\TablePostExample.json";
 
     public static void DemoMethod() {
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-//        PostCatalogItemEpisodeDemoMethod();
-//        System.out.println(UpdateEntityDemoMethod("catalog-item", "1541", CatalogItemEpisodePutExampleJson));
-//        DeleteEntityDemoMethod("Catalog-Item", "1546");
-        System.out.println("I'm in the demo method");
+        String newId = PostCatalogItemEpisodeDemoMethod();
+        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
+        DeleteEntityDemoMethod("catalog-Item", newId);
     }
 
     public static String PostCatalogItemEpisodeDemoMethod() {
