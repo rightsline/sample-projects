@@ -27,8 +27,8 @@ public class ConfigSetup {
         catch(Exception e){
             System.out.println("Please ensure that you have a valid config file in the Config folder ");
         }
-		return !basicAuth.isEmpty();        
+		return !basicAuth.isEmpty();
 //        System.out.println(getBasicAuth());
-//        String pageName = credentials.getJSONObject("pageInfo").getString("pageName");
+
     }
 }
