@@ -1,0 +1,43 @@
+﻿{
+  "parentRelationship": null,
+  "title": "Swiss Army Man",
+  "template": {
+    "fields": null,
+    "templateId": 1,
+    "templateName": "Feature",
+    "processID": 0,
+    "processName": null
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Development"
+  },
+  "characteristics": {
+    "release_year": "2016",
+    "target_market": "Sundance",
+    "websites": "http://swissarmyman.com/",
+    "running_time": "97",
+    "target_year": "2016",
+    "imdb_link": "https://www.imdb.com/title/tt4034354/",
+    "aka": "Swiss Army Man",
+    "mpaa_rating": "R",
+    "launch_market": "Sundance",
+    "facebook": "https://www.facebook.com/swissarmymanfilm/",
+    "financing_status": "Fully Financed",
+    "release_date": "07/01/2016",
+    "launch_year": "2016",
+    "twitter": "https://twitter.com/swissarmyman",
+    "budget": "3000000",
+    "global_box_office_gross": "USD 500",
+    "original_air_date": "01/22/2016",
+    "festival_premiere": "Festival Premiere",
+    "festival_year": "2016",
+    "awards": "Awards|Awards2",
+    "genre": [
+      "Adventure",
+      "Comedy",
+      "Drama"
+    ],
+    "notes": "Notes"
+  }
+}

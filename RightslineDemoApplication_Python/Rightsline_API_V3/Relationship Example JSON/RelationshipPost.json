@@ -1,0 +1,8 @@
+{
+  "parentURL": "https://api-dev.rightsline.com/v3/deal/483",
+  "childURL": "https://api-dev.rightsline.com/v3/contact/686598",
+  "relationshipType": {
+    "relationshipTypeId": 1,
+    "relationshipTypeName": "Licensee"
+  }
+}

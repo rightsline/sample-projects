@@ -1,0 +1,14 @@
+{
+  "title": "A Super New Table",
+  "template": {
+    "templateId": 13,
+    "templateName": "Sample Table"
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Usage Created"
+  },
+  "characteristics": {
+    "currency": "EUR"
+  }
+}
