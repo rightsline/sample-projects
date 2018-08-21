@@ -8,8 +8,9 @@ public class Main {
 
     public static void main(String[] args) {
         // write your code
-        ConfigSetup.getConfigFile();
-        System.out.println("Rightsline Demo Java V0.0.1");
-        RestClient.DemoMethod();
+        if (ConfigSetup.getConfigFile()) {
+            System.out.println("Rightsline Demo Java V0.0.1");
+            RestClient.DemoMethod();
+        }
     }
 }

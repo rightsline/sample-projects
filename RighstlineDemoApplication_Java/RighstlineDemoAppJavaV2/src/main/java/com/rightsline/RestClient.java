@@ -6,45 +6,55 @@ import java.net.URL;
 
 public class RestClient {
 
-    public static String BaseConnectionString = "https://api-qa.rightsline.com/v2/";
+    public static String BaseConnectionString = "https://api-dev.rightsline.com/v2/";
 
 
     static HttpURLConnection client;
 
     //These are example JSON files that we have created
     //There are fields in the Feature example that are currently not working and will need to be removed
-    private static String CatalogItemEpisodePostExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
-    private static String CatalogItemEpisodePutExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
-    private static String CatalogItemFeaturePostExampleJson = "\\RighstlineDemoAppJavaV2\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
+    private static String CatalogItemEpisodePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
+    private static String CatalogItemEpisodePutExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePUT.json";
+    private static String CatalogItemFeaturePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
     private static String RelationshipPostExampleJson = "\\RightslineDemoAppJavaV2\\Relationship Example JSON\\RelationshipPost.json";
     private static String TablePostExampleJson = "\\RightslineDemoAppJavaV2\\Table Example JSON\\TablePostExample.json";
-    public static void DemoMethod(){
-        System.out.println(GetRequestDemoMethod("Catalog-item","1605"));
-        PostCatalogItemEpisodeDemoMethod();
-        System.out.println(UpdateEntityDemoMethod("Catalog-item", "1605", CatalogItemEpisodePutExampleJson));
-        DeleteEntityDemoMethod("Catalog-Item", "1602");
+
+    public static void DemoMethod() {
+//        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+//        PostCatalogItemEpisodeDemoMethod();
+//        System.out.println(UpdateEntityDemoMethod("catalog-item", "1541", CatalogItemEpisodePutExampleJson));
+//        DeleteEntityDemoMethod("Catalog-Item", "1546");
+        System.out.println("I'm in the demo method");
     }
-    public static void PostCatalogItemEpisodeDemoMethod(){
+
+    public static String PostCatalogItemEpisodeDemoMethod() {
         String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
+        return newId;
     }
-    public static void PostCatalogItemFeatureDemoMethod(){
+
+    public static void PostCatalogItemFeatureDemoMethod() {
         String newId = PostEntityDemoMethod("catalog-item", CatalogItemFeaturePostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
-    }public static void PostTableDemoMethod(){
+    }
+
+    public static void PostTableDemoMethod() {
         String newId = PostEntityDemoMethod("table", TablePostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
-    }public static void PostRelationshipDemoMethod(){
+    }
+
+    public static void PostRelationshipDemoMethod() {
         String newId = PostEntityDemoMethod("relationship", RelationshipPostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
     }
 
     /**
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
+     *
      * @param entityType
      * @param itemId
      */
-    public static void DeleteEntityDemoMethod(String entityType, String itemId){
+    public static void DeleteEntityDemoMethod(String entityType, String itemId) {
         try {
             //Create client
             URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
@@ -62,7 +72,7 @@ public class RestClient {
                 response.append(inputLine);
             }
             in.close();
-            System.out.println("Entity #"+ itemId + " has been deleted");
+            System.out.println("Entity #" + itemId + " has been deleted");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -74,12 +84,13 @@ public class RestClient {
 
     /**
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
+     *
      * @param EntityType
      * @param EntityId
      * @param jsonFilePath
      * @return
      */
-    public static String UpdateEntityDemoMethod(String EntityType, String EntityId, String jsonFilePath){
+    public static String UpdateEntityDemoMethod(String EntityType, String EntityId, String jsonFilePath) {
         try {
             //Create client
             URL url = new URL(BaseConnectionString + EntityType + "/" + EntityId);
@@ -95,7 +106,7 @@ public class RestClient {
             String jsonBody = ReadFile(folderPath);
             System.out.println(jsonBody);
             OutputStream stream = client.getOutputStream();
-            OutputStreamWriter wr= new OutputStreamWriter(stream, "UTF-8");
+            OutputStreamWriter wr = new OutputStreamWriter(stream, "UTF-8");
             wr.write(jsonBody);
             wr.flush();
             wr.close();
@@ -122,11 +133,12 @@ public class RestClient {
             }
         }
     }
+
     /**
      * Creates an HTTP GET request and returns a JSON string
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
      */
-    public static String GetRequestDemoMethod(String entityType, String itemId){
+    public static String GetRequestDemoMethod(String entityType, String itemId) {
         try {
             //Create client
             URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
@@ -139,7 +151,7 @@ public class RestClient {
                     new InputStreamReader(client.getInputStream()));
             String inputLine;
             //Append each line
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
@@ -160,7 +172,7 @@ public class RestClient {
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
      */
 
-    public static String PostEntityDemoMethod(String EntityType, String jsonFilePath){
+    public static String PostEntityDemoMethod(String EntityType, String jsonFilePath) {
         try {
             //Create client
             URL url = new URL(BaseConnectionString + EntityType);
@@ -176,7 +188,7 @@ public class RestClient {
             String jsonBody = ReadFile(folderPath);
             System.out.println(jsonBody);
             OutputStream stream = client.getOutputStream();
-            OutputStreamWriter wr= new OutputStreamWriter(stream, "UTF-8");
+            OutputStreamWriter wr = new OutputStreamWriter(stream, "UTF-8");
             wr.write(jsonBody);
             wr.flush();
             wr.close();
@@ -207,7 +219,7 @@ public class RestClient {
     /**
      * Reads all the text in a file and returns it as a string. Used for reading JSON files
      */
-    private static String ReadFile(String filePath){
+    private static String ReadFile(String filePath) {
         StringBuilder sb = new StringBuilder();
         try {
             BufferedReader r = new BufferedReader(new FileReader(filePath));

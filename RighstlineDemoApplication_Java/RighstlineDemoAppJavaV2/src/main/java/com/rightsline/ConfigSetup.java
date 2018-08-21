@@ -3,6 +3,7 @@ package com.rightsline;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import java.io.File;
 import java.io.FileReader;
 import java.util.Base64;
 
@@ -13,20 +14,23 @@ public class ConfigSetup {
         return basicAuth;
     }
 
-    public static void getConfigFile(){
-        String folderPath = System.getProperty("user.dir");
-        String configFilePath = folderPath + "\\Config\\configV2.json";
+    public static boolean getConfigFile(){
+        File file = new File("./Config/dev_config.json");
+        if(file.isFile()){
+            System.out.println("Hey! I'm here!");
+        }
         try {
-            JsonObject credentials = new JsonParser().parse(new FileReader(configFilePath)).getAsJsonObject();
+            JsonObject credentials = new JsonParser().parse(new FileReader(file.getPath())).getAsJsonObject();
             String user = credentials.get("user").getAsString();
             String pass = credentials.get("pass").getAsString();
             String combined = user + ":" + pass;
             basicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());
+            return true;
         }
         catch(Exception e){
-            System.out.println("Please ensure that you have a valid configV2.json file in the" + folderPath + " Config folder ");
+            System.out.println("Please ensure that you have a valid config file in the Config folder ");
         }
-//        System.out.println(getBasicAuth());
-//        String pageName = credentials.getJSONObject("pageInfo").getString("pageName");
+
+        return false;
     }
 }
