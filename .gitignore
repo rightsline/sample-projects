@@ -1656,3 +1656,4 @@ venv/
 RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/Config/configV2.json
 RightslineDemoApplication_Python/Rightsline_API_V3/config.json
 RightslineDemoApplication_Python/Rightsline_API_V2/dev_config.json
+RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/Config/dev_config.json
