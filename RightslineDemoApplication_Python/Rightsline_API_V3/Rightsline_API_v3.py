@@ -174,7 +174,7 @@ def getTable(table_id):
 
 def postTable():
     with open("Table Example JSON/TablePostExample.json", 'r') as file:
-        table_json = ''.join(file.readlines())[3:]
+        table_json = ''.join(file.readlines())
         print(table_json)
     headers = generate_AWS_headers("POST", "v3/table", payload=table_json)
 
@@ -185,7 +185,7 @@ def postTable():
 
 def putTable(table_id):
     with open("Table Example JSON/TablePutExample.json", 'r') as file:
-        table_json = ''.join(file.readlines())[3:]
+        table_json = ''.join(file.readlines())
         print(table_json)
     headers = generate_AWS_headers("PUT", "v3/table/" + str(table_id), payload=table_json)
 
@@ -232,4 +232,6 @@ def deleteRelationship(relationship_id):
 
 # putCatalogItem(1541)
 # postRelationship()
-getRelationship(48324735)
+# getRelationship(48324735)
+# postTable()
+deleteTable(2678)
