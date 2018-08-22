@@ -161,7 +161,7 @@ namespace RightslineDemoAppDotNetV2
 
         #region Relationship Example Methods
 
-        public static string RelationshipPostExample = "D:/RightslineDemoApp/RightslineDemoAppDotNet/RightslineDemoAppDotNetV3/Relationship Example JSON/RelationshipPost.json";
+        public static string RelationshipPostExample = "Relationship Example JSON/RelationshipPost.json";
         
         /// <summary>
         /// Async GET call to Rightsline's V2 API that will return details of a relationship
