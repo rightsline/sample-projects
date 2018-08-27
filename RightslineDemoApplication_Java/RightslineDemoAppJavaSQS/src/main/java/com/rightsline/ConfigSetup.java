@@ -15,7 +15,7 @@ public class ConfigSetup {
 
     public static HashMap<String, String> getConfigFile(){
         HashMap<String, String> Credentials = new HashMap<>();
-        File file = new File("/Config/dev_config.json");
+        File file = new File("./Config/dev_config.json");
 
         try {
             JsonObject credentials = new JsonParser().parse(new FileReader(file.getPath())).getAsJsonObject();

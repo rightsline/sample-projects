@@ -36,7 +36,19 @@ public abstract class AWS4SignerBase {
     /** format strings for the date/time and date stamps required during signing **/
     public static final String ISO8601BasicFormat = "yyyyMMdd'T'HHmmss'Z'";
     public static final String DateStringFormat = "yyyyMMdd";
-    
+
+
+    public static final String X_Amz_Algorithm = "X-Amz-Algorithm";
+    public static final String X_Amz_Credential = "X-Amz-Credential";
+    public static final String X_Amz_SignedHeaders = "X-Amz-SignedHeaders";
+    public static final String X_Amz_Date = "X-Amz-Date";
+    public static final String X_Amz_Signature = "X-Amz-Signature";
+    public static final String X_Amz_Expires = "X-Amz-Expires";
+    public static final String X_Amz_Content_SHA256 = "X-Amz-Content-SHA256";
+    public static final String X_Amz_Decoded_Content_Length = "X-Amz-Decoded-Content-Length";
+    public static final String X_Amz_Meta_UUID = "X-Amz-Meta-UUID";
+
+
     protected URL endpointUrl;
     protected String httpMethod;
     protected String serviceName;

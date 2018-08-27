@@ -77,9 +77,9 @@ public class HttpUtils {
             connection.setRequestMethod(httpMethod);
             
             if ( headers != null ) {
-                System.out.println("--------- Request headers ---------");
+                //System.out.println("--------- Request headers ---------");
                 for ( String headerKey : headers.keySet() ) {
-                    System.out.println(headerKey + ": " + headers.get(headerKey));
+                    //System.out.println(headerKey + ": " + headers.get(headerKey));
                     connection.setRequestProperty(headerKey, headers.get(headerKey));
                 }
             }

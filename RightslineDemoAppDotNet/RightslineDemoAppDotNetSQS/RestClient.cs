@@ -39,7 +39,7 @@ namespace RightslineDemoAppDotNetSQS
             // placing the region into the url if we're not using us-east-1.
             var regionUrlPart = string.Format("-{0}", region);
             //This is our QA fifo queue, replace it with your queue's url
-            var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
+            var endpointUri = BaseUrl + config["AccountId"] + "/" + config["QueueName"];
             var requestParameters = "Action=ReceiveMessage&MaxNumberOfMessages=" + MessagesToReceieve;
             var uri = new Uri(endpointUri + "?" + requestParameters);            
             var headers = new Dictionary<string, string>()
@@ -135,15 +135,14 @@ namespace RightslineDemoAppDotNetSQS
             var entityregex = new Regex("v2\\/(.*?)\\/");
             foreach (JObject message in messages)
             {
+                var x = entityregex.Match(message["entityUrl"].ToString());
                 //message["entityUrl"].ToString().Contains(entityName)
                 var messageEntity = entityregex.Match(message["entityUrl"].ToString()).Groups[1];
                 if (messageEntity.ToString().Equals(entityName))
                 {
                     numMessages++;
                     Console.WriteLine("A " + messageEntity + " was " + message["action"] + ", URL: " + message["entityUrl"]);
-                    numMessages++;
-
-               }
+                }
                 //Uncomment this if you want to be notified of all other messsages in the response
                 //else
                 //{
@@ -166,10 +165,12 @@ namespace RightslineDemoAppDotNetSQS
                 // placing the region into the url if we're not using us-east-1.
                 var regionUrlPart = string.Format("-{0}", region);
                 //This is our QA fifo queue, replace it with your queue's url
-                var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
+                var endpointUri = BaseUrl + config["AccountId"] + "/" + config["QueueName"];
                 //Encode the receipt handle and add it to the url
+                Console.WriteLine(receipt);
                 var encodedReceipt = WebUtility.UrlEncode(receipt);
                 var requestParameters = "Action=DeleteMessage&ReceiptHandle=" + encodedReceipt;
+                Console.WriteLine(encodedReceipt);
                 var uri = new Uri(endpointUri + "?" + requestParameters);
                 var headers = new Dictionary<string, string>()
                 {
@@ -189,7 +190,6 @@ namespace RightslineDemoAppDotNetSQS
                 headers.Add("Authorization", authorization);
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
-
                 //Console.WriteLine("Receipt for message deleted: " + receipt);
 
             }
