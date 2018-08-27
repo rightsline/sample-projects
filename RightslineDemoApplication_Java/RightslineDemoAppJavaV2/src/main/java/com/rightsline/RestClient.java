@@ -21,13 +21,13 @@ public class RestClient {
 
     public static void DemoMethod() {
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-        String newId = PostCatalogItemEpisodeDemoMethod();
+        String newId = PostEntityDemoMethod("catalog-item");
         System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
         DeleteEntityDemoMethod("catalog-Item", newId);
     }
 
-    public static String PostCatalogItemEpisodeDemoMethod() {
-        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
+    public static String PostEntityDemoMethod(String entityType) {
+        String newId = PostEntityDemoMethod(entityType, CatalogItemEpisodePostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
         return newId;
     }

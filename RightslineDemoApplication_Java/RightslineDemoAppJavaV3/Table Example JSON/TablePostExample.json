@@ -1,0 +1,20 @@
+{
+  "parentRelationship": [
+    {
+      "parentURL": "http://api-dev.rightsline.com/v3/catalog-item/1541"
+    }
+  ],
+  "title": "Maciej's New Table",
+  "template": {
+    "templateId": 13,
+    "templateName": "Sample Table"
+  },
+  "status": {
+    "statusId": 1,
+    "statusName": "Usage Created"
+  },
+  "characteristics": {
+    "reporting_group": "United States",
+    "currency": "USD"
+  }
+}

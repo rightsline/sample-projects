@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>Rightsline</groupId>
-    <artifactId>RighstlineDemoAppJavaV2</artifactId>
+    <artifactId>RightslineDemoAppJavaV3</artifactId>
     <version>1.0-SNAPSHOT</version>
     <build>
         <plugins>
@@ -26,4 +26,5 @@
             <version>2.8.5</version>
         </dependency>
     </dependencies>
+
 </project>
