@@ -168,9 +168,10 @@ namespace RightslineDemoAppDotNetSQS
                 var endpointUri = BaseUrl + config["AccountId"] + "/" + config["QueueName"];
                 //Encode the receipt handle and add it to the url
                 Console.WriteLine(receipt);
+                Console.WriteLine();
                 var encodedReceipt = WebUtility.UrlEncode(receipt);
                 var requestParameters = "Action=DeleteMessage&ReceiptHandle=" + encodedReceipt;
-                Console.WriteLine(encodedReceipt);
+                
                 var uri = new Uri(endpointUri + "?" + requestParameters);
                 var headers = new Dictionary<string, string>()
                 {
@@ -190,6 +191,7 @@ namespace RightslineDemoAppDotNetSQS
                 headers.Add("Authorization", authorization);
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
+                Console.WriteLine(response);
                 //Console.WriteLine("Receipt for message deleted: " + receipt);
 
             }

@@ -61,28 +61,23 @@ public class RestClient {
         String authorization = signer.computeSignature(headers, requestParams, AWS4SignerBase.EMPTY_BODY_SHA256, config.get("AccessKey"), config.get("SecretKey"));
         headers.put("Authorization", authorization);
         String response = HttpUtils.invokeHttpRequest(url, "GET", headers, null);
-        try {
-            response = java.net.URLDecoder.decode(response, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         return response;
     }
     public static void StartBackgroundMonitoring(){
-        class PollTask extends TimerTask{
+        TimerTask PollTask = new TimerTask(){
             public void run(){
                 String messages = getSQSMessages();
                 ArrayList<JsonObject> jsonObjects = FilterXml(messages);
+                Notify(jsonObjects, "catalog-item");
                 Runnable deleteMessagesThread = () ->{
                     ArrayList<String> receipts = FilterReceiptHandles(messages);
                     DeleteMessage(receipts);
                 };
                 new Thread(deleteMessagesThread).start();
-                Notify(jsonObjects, "catalog-item");
             }
-        }
+        };
         Timer t = new Timer();
-        t.schedule(new PollTask(), SecondsToPoll * 1000);
+        t.schedule(PollTask, 2000, SecondsToPoll * 1000);
     }
     public static ArrayList<JsonObject> FilterXml(String XMLMessage){
         ArrayList<JsonObject> filteredMessages = new ArrayList<>();
@@ -100,19 +95,18 @@ public class RestClient {
         Matcher m = receiptFilter.matcher(XMLMessage);
         ArrayList<String> receipts = new ArrayList<>();
         while(m.find()){
-            try{
-                String encodedReceipt = URLEncoder.encode(m.group(1), StandardCharsets.UTF_8.toString());
-                System.out.println(encodedReceipt);
-                receipts.add(encodedReceipt);
-            }
-            catch(Exception e){
-                e.printStackTrace();
-            }
+//            try{
+
+                receipts.add(m.group(1));
+//            }
+//            catch(Exception e){
+//                e.printStackTrace();
+//            }
         }
         return receipts;
     }
     private static void Notify(ArrayList<JsonObject> messages, String entitySearch){
-        System.out.println("Poll at " + java.time.LocalDate.now());
+        System.out.println("Poll at " + java.time.LocalDateTime.now());
         int numMessages = 0;
         Pattern entityPattern = Pattern.compile(entityRegex);
         for(JsonObject message : messages) {
@@ -130,11 +124,23 @@ public class RestClient {
             System.out.println("Recieved "+ messages.size() + " messages No messages regarding " + entitySearch + " were found.");
         }
     }
+
+    /**
+     *  Sends a request to Amazon to delete a batch of receipt handles for the messages received
+      * @param receiptHandles
+     */
     private static void DeleteMessage(ArrayList<String> receiptHandles){
         for(String receipt : receiptHandles){
             String region = config.get("Region");
             String endpointUri = BaseUrl + config.get("AccountId") + "/" + config.get("QueueName");
-            String requestParameters = "Action=DeleteMessage&ReceiptHandle=" + receipt;
+            String encodedReceipt = "";
+            try {
+                encodedReceipt = URLEncoder.encode(receipt, "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            //Receipt handle needs to be encoded for the URL but not in the requestParams hashmap
+            String requestParameters = "Action=DeleteMessage&ReceiptHandle=" + encodedReceipt;
             HashMap<String, String> requestParams = new HashMap()
             {
                 {
@@ -155,12 +161,7 @@ public class RestClient {
             String authorization = signer.computeSignature(headers, requestParams, AWS4SignerBase.EMPTY_BODY_SHA256, config.get("AccessKey"), config.get("SecretKey"));
             headers.put("Authorization", authorization);
             String response = HttpUtils.invokeHttpRequest(url, "GET", headers, null);
-            try {
-                response = java.net.URLDecoder.decode(response, "UTF-8");
-                System.out.println(response);
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            //System.out.println(response);
         }
     }
 }
