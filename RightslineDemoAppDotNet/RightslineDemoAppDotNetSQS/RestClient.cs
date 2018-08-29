@@ -31,6 +31,16 @@ namespace RightslineDemoAppDotNetSQS
         private static string Regex = "\\{(.*?)\\}<";
         private static int MessagesToReceieve = 10;
 
+        //Test method to check the queue once for a relationship item and delete received messages
+        public static void DemoMonitor()
+        {
+            var messages = GetSQSMessages();
+            var jsonobjects = FilterXML(messages);
+            Notify(jsonobjects, "relationship");
+            var receipts = GetReceiptHandles(messages);
+            DeleteMessage(receipts);
+        }
+
         //This returns an XML string from the SQS queue that contains the 10 most recent messages. 
         public static string GetSQSMessages()
         {
@@ -86,15 +96,7 @@ namespace RightslineDemoAppDotNetSQS
             var receipts = GetReceiptHandles(messages);
             DeleteMessage(receipts);
         }
-        //Test method to check the queue once for a relationship item and delete received messages
-        public static void DemoMonitor()
-        {
-            var messages = GetSQSMessages();
-            var jsonobjects = FilterXML(messages);
-            Notify(jsonobjects, "relationship");
-            var receipts = GetReceiptHandles(messages);
-            DeleteMessage(receipts);
-        }
+
         //Uses regex to filter the XML then converts it to JSON and builds JSON objects out of the results
         private static List<JObject> FilterXML(string messages)
         {
@@ -176,7 +178,6 @@ namespace RightslineDemoAppDotNetSQS
                 var headers = new Dictionary<string, string>()
                 {
                     {AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256}
-//                  {"content-type", "text/plain"}
                 };
                 //Use the AWS4 signer to generate the signer and sign the request
                 var signer = new AWS4SignerForAuthorizationHeader()
@@ -191,7 +192,7 @@ namespace RightslineDemoAppDotNetSQS
                 headers.Add("Authorization", authorization);
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
-                Console.WriteLine(response);
+                //Console.WriteLine(response);
                 //Console.WriteLine("Receipt for message deleted: " + receipt);
 
             }

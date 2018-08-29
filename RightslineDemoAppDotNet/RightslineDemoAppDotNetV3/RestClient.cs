@@ -7,7 +7,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using AWSSignatureV4_S3_Sample.Signers;
 using AWSSignatureV4_S3_Sample.Util;
@@ -27,10 +26,14 @@ namespace RightslineDemoAppDotNetV3
             client.DefaultRequestHeaders.Clear();
             client.DefaultRequestHeaders.Accept.Clear();
         }
-
+        /// <summary>
+        /// POST call to generate temporary credentials according to Amazon's security protocols
+        /// </summary>
+        /// <returns></returns>
         public static async Task<string> GetSessionToken()
         {
             ClearHeaders();
+            //x-api-key is included in the headers, access and secret keys are included in the body
             client.DefaultRequestHeaders.Add("x-api-key", ConfigSetup.ApiKey);
             JObject credentials = new JObject();
             credentials.Add("accessKey", ConfigSetup.AccessKey);
@@ -38,19 +41,18 @@ namespace RightslineDemoAppDotNetV3
             var postTask = client.PostAsync(BaseConnectionString + sessionTokenUrl,
                 new StringContent(credentials.ToString(), Encoding.UTF8, "application/json"));
             var result = await postTask;
+            //returns a json string consisting of temporary access key, secret key, date, and security token
             return result.Content.ReadAsStringAsync().Result;
         }
         public static string GenerateGetRequestMethod(string entityType, string entityId)
         {
-            JObject credentials = JObject.Parse(GetSessionToken().Result);
-            //Console.WriteLine(credentials.GetValue("sessionToken"));
-
-            //This is our dev url for the api, replace it 
-            var endpointUri = "https://api-dev.rightsline.com/v3/" + entityType + "/" + entityId;
+            //Generates a JSON object from the session token JSON string 
+            JObject credentials = JObject.Parse(GetSessionToken().Result);            
+            
+            var endpointUri = BaseConnectionString + entityType + "/" + entityId;
             var uri = new Uri(endpointUri);
             var headers = new Dictionary<string, string>()
-            {
-                //{AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256},
+            {                
                 {"content-type", "application/x-www-form-urlencoded"},
                 {"x-amz-security-token", credentials.GetValue("sessionToken").ToString() },
                 {"x-api-key",  ConfigSetup.ApiKey}
@@ -64,8 +66,10 @@ namespace RightslineDemoAppDotNetV3
                 Service = "execute-api",
                 Region = Region
             };
+            //Uses the generated accessKey and secretKey from GenerateSessionToken(), NOT FROM CONFIG
             var authorization = signer.ComputeSignature(headers, "", AWS4SignerBase.EMPTY_BODY_SHA256,
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
+            Console.WriteLine(authorization);
             //Add the signed authorization to headers
             headers.Add("Authorization", authorization);
             string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
@@ -74,19 +78,18 @@ namespace RightslineDemoAppDotNetV3
         }
         public static string GeneratePostRequestMethod(string entityType, string jsonFilePath)
         {
+            //Generates a JSON object from the session token JSON string 
             JObject credentials = JObject.Parse(GetSessionToken().Result);
-            //Console.WriteLine(credentials.GetValue("sessionToken"));
-            //Get the JSON for the object being created and hash it for the POST request
+            
+            //Get the JSON for the entity being created and hash it for the POST request
             var jsonObject = File.ReadAllText(jsonFilePath);
             var encodedJsonBytes = Encoding.UTF8.GetBytes(jsonObject);
             var hashedJsonString = ComputeSHA256Hash(encodedJsonBytes);            
             
-            //This is our dev url for the api, replace it 
-            var endpointUri = "https://api-dev.rightsline.com/v3/" + entityType + "/";
+            var endpointUri = BaseConnectionString + entityType;
             var uri = new Uri(endpointUri);
             var headers = new Dictionary<string, string>()
-            {
-                //{AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256},
+            {                
                 {"content-type", "application/json"},
                 {"x-amz-security-token", credentials.GetValue("sessionToken").ToString() },
                 {"x-api-key",  ConfigSetup.ApiKey}
@@ -100,6 +103,7 @@ namespace RightslineDemoAppDotNetV3
                 Service = "execute-api",
                 Region = Region
             };
+            //Uses the generated accessKey and secretKey from GenerateSessionToken(), NOT FROM CONFIG
             var authorization = signer.ComputeSignature(headers, "", hashedJsonString,
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
             //Add the signed authorization to headers
@@ -108,7 +112,7 @@ namespace RightslineDemoAppDotNetV3
             //Console.WriteLine(response);
             return response;
         }
-        private static string ComputeSHA256Hash(byte[] toBeEncoded)
+        public static string ComputeSHA256Hash(byte[] toBeEncoded)
         {
             var hasher = SHA256.Create();
             var hashedBytes = hasher.ComputeHash(toBeEncoded);
@@ -121,15 +125,13 @@ namespace RightslineDemoAppDotNetV3
         }
         public static string GenerateDeleteRequestMethod(string entityType, string entityId)
         {
+            //Generates a JSON object from the session token JSON string 
             JObject credentials = JObject.Parse(GetSessionToken().Result);
-            //Console.WriteLine(credentials.GetValue("sessionToken"));
-
-            //This is our dev url for the api, replace it 
-            var endpointUri = "https://api-dev.rightsline.com/v3/" + entityType + "/" + entityId;
+            
+            var endpointUri = BaseConnectionString + entityType + "/" + entityId;
             var uri = new Uri(endpointUri);
             var headers = new Dictionary<string, string>()
-            {
-                //{AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256},
+            {                
                 {"content-type", "application/x-www-form-urlencoded"},
                 {"x-amz-security-token", credentials.GetValue("sessionToken").ToString() },
                 {"x-api-key",  ConfigSetup.ApiKey}
@@ -143,6 +145,7 @@ namespace RightslineDemoAppDotNetV3
                 Service = "execute-api",
                 Region = Region
             };
+            //Uses the generated accessKey and secretKey from GenerateSessionToken(), NOT FROM CONFIG
             var authorization = signer.ComputeSignature(headers, "", AWS4SignerBase.EMPTY_BODY_SHA256,
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
             //Add the signed authorization to headers
@@ -153,19 +156,19 @@ namespace RightslineDemoAppDotNetV3
         }
         public static string GeneratePutRequestMethod(string entityType, string entityId, string jsonFilePath)
         {
+            //Generates a JSON object from the session token JSON string 
             JObject credentials = JObject.Parse(GetSessionToken().Result);
-            //Console.WriteLine(credentials.GetValue("sessionToken"));
-            //Get the JSON for the object being created and hash it for the POST request
+            
+            //Get the JSON for the entity being updated and hash it for the PUT request
             var jsonObject = File.ReadAllText(jsonFilePath);
             var encodedJsonBytes = Encoding.UTF8.GetBytes(jsonObject);
             var hashedJsonString = ComputeSHA256Hash(encodedJsonBytes);
 
-            //This is our dev url for the api, replace it 
-            var endpointUri = "https://api-dev.rightsline.com/v3/" + entityType + "/" + entityId;
+            
+            var endpointUri = BaseConnectionString + entityType + "/" + entityId;
             var uri = new Uri(endpointUri);
             var headers = new Dictionary<string, string>()
             {
-                //{AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256},
                 {"content-type", "application/json"},
                 {"x-amz-security-token", credentials.GetValue("sessionToken").ToString() },
                 {"x-api-key",  ConfigSetup.ApiKey}
@@ -179,6 +182,7 @@ namespace RightslineDemoAppDotNetV3
                 Service = "execute-api",
                 Region = Region
             };
+            //Uses the generated accessKey and secretKey from GenerateSessionToken(), NOT FROM CONFIG
             var authorization = signer.ComputeSignature(headers, "", hashedJsonString,
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
             //Add the signed authorization to headers

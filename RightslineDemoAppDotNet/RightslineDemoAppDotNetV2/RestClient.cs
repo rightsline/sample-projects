@@ -14,7 +14,7 @@ namespace RightslineDemoAppDotNetV2
 {
     /// <summary>
     /// All the IDs you see here are specific to the QA environment
-    /// CHANGE THE IDs TO MATCH YOUR ENVIRONMENT
+    /// CHANGE THE IDS TO MATCH YOUR ENVIRONMENT
     /// </summary>
     public class RestClient
     {
@@ -146,7 +146,6 @@ namespace RightslineDemoAppDotNetV2
 
         /// <summary>
         /// Async DELETE call to Rightsline's V2 API that creates a new Table
-        /// 
         /// </summary>
         /// <returns>ID of created Table</returns>
         public static async Task<string> DeleteTable(int tableId)

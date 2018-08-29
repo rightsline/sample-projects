@@ -22,7 +22,6 @@ namespace RightslineDemoAppDotNetV3.Config
                 AccessKey = credentials.GetValue("accessKey").ToString();
                 SecretKey = credentials.GetValue("secretKey").ToString();
                 ApiKey = credentials.GetValue("xApiKey").ToString();
-//                Console.WriteLine(BasicAuthCredentials);
             }
             catch(Exception e)
             {
