@@ -18,13 +18,8 @@ public class ConfigSetup {
             String secretKey = configJson.get("secretKey").getAsString();
             String xApiKey = configJson.get("xApiKey").getAsString();
 
-            System.out.println("Acess:" + accessKey);
-            System.out.println("sekret:" + secretKey);
-            System.out.println("api:" + xApiKey);
             credentials.put("accessKey", accessKey);
-            System.out.println("not that one");
             credentials.put("secretKey", secretKey);
-            System.out.println("not that one either");
             credentials.put("xApiKey", xApiKey);
 
         } catch (Exception e) {

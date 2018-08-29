@@ -20,7 +20,7 @@ public class RestClient {
     private static String TablePostExampleJson = "\\Table Example JSON\\TablePostExample.json";
 
     public static void DemoMethod() {
-//        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
         String newId = PostEntityDemoMethod("catalog-item");
         System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
         DeleteEntityDemoMethod("catalog-Item", newId);

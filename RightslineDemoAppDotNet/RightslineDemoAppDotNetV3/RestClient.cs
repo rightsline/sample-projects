@@ -67,6 +67,7 @@ namespace RightslineDemoAppDotNetV3
             var authorization = signer.ComputeSignature(headers, "", AWS4SignerBase.EMPTY_BODY_SHA256,
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
             //Add the signed authorization to headers
+            Console.WriteLine("AUTHORIZATION: " + authorization);
             headers.Add("Authorization", authorization);
             string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
             //Console.WriteLine(response);

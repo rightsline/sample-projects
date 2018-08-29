@@ -1,5 +1,7 @@
 package com.rightsline;
 
+import auth.AWS4SignerBase;
+import auth.AWS4SignerForQueryParameterAuth;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import util.HttpUtils;
@@ -20,7 +22,7 @@ public class RestClient {
     static HttpURLConnection client;
     static String apiEndpointUrl = "https://api-dev.rightsline.com/v3/auth/temporary-credentials";
     static String json = "{\n\t\"accessKey\":\"" + ConfigSetup.getCredentials().get("accessKey") + "\",\n\t\"secretKey\":\"" + ConfigSetup.getCredentials().get("secretKey") + "\"\n}";
-    static Map<String, String> initialHeaders = new HashMap<String, String>(){{
+    static Map<String, String> initialHeaders = new HashMap<String, String>() {{
         put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
         put("content-type", "application/json");
     }};
@@ -36,10 +38,10 @@ public class RestClient {
 
     public static void DemoMethod() throws MalformedURLException {
 //        System.out.println(ConfigSetup.getCredentials());
-        HashMap<String,String> awsCreds = getApiResponse();
+        HashMap<String, String> awsCreds = getApiResponse();
 
 
-//        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+        System.out.println(GetRequestDemoMethod("catalog-item", "1541", awsCreds));
 //        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
 //        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
 //        DeleteEntityDemoMethod("catalog-Item", newId);
@@ -174,15 +176,27 @@ public class RestClient {
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal,
      * Returns the entity in XML string format
      */
-    public static String GetRequestDemoMethod(String entityType, String itemId) {
-//        try {
-//            //Create client
-//            URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
-//            client = (HttpURLConnection) url.openConnection();
-//            client.setRequestMethod("GET");
-//            client.setRequestProperty("Authorization", ConfigSetup.getCredentials());
-//            client.connect();
-//            //Get the response
+    public static String GetRequestDemoMethod(String entityType, String itemId, HashMap<String, String> awsCreds) {
+        try {
+            //Create client
+            URL url = new URL(BaseConnectionString + entityType + "/" + itemId);
+            AWS4SignerForQueryParameterAuth auth = new AWS4SignerForQueryParameterAuth(url, "GET", "execute-api", "us-east-1");
+            Map<String, String> headers = new HashMap<>();
+            headers.put("content-type", "application/json");
+            headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
+            headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
+
+
+            String authorization = auth.computeSignature(headers, new HashMap<>(), AWS4SignerBase.EMPTY_BODY_SHA256, awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+            client = (HttpURLConnection) url.openConnection();
+
+//            client.setRequestProperty("Authorization", authorization);
+            headers.put("Authorization", authorization);
+            System.out.println("AUTH: " + authorization);
+            client.setRequestMethod("GET");
+
+            client.connect();
+            //Get the response
 //            BufferedReader in = new BufferedReader(
 //                    new InputStreamReader(client.getInputStream()));
 //            String inputLine;
@@ -190,18 +204,19 @@ public class RestClient {
 //            StringBuilder response = new StringBuilder();
 //            while ((inputLine = in.readLine()) != null) {
 //                response.append(inputLine);
+//                response.append("\r\n");
 //            }
 //            in.close();
-//            return response.toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        } finally {
-//            if (client != null) {
-//                client.disconnect();
-//            }
-//        }
-        return "";
+            String response = HttpUtils.invokeHttpRequest(url, "GET", headers, "");
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (client != null) {
+                client.disconnect();
+            }
+        }
     }
 
     /**
