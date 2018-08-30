@@ -44,12 +44,13 @@ public class RestClient {
 
     public static void DemoMethod() {
 
-//        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-//        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
-//        System.out.println(newId);
+        /*
+            These are sample CRUD operations. Please replace the itemIds and json files for your own usage.
+         */
+        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+        System.out.println(PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson));
         System.out.println(UpdateEntityDemoMethod("catalog-item", "1561", CatalogItemEpisodePutExampleJson));
-//        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
-//        DeleteEntityDemoMethod("catalog-Item", newId);
+        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
     }
 
     private static HashMap<String, String> getApiResponse() throws MalformedURLException {
@@ -66,12 +67,6 @@ public class RestClient {
 
         return awsCreds;
     }
-
-//
-//    public static void PostRelationshipDemoMethod() {
-//        String newId = PostEntityDemoMethod("relationship", RelationshipPostExampleJson);
-//        System.out.println("The ID for the newest created catalog-item is: " + newId);
-//    }
 
     /**
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
@@ -95,9 +90,7 @@ public class RestClient {
             String authorization = auth.computeSignature(headers, new HashMap<>(), AWS4SignerBase.EMPTY_BODY_SHA256, awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
-//            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            //System.out.println("AUTH: " + authorization);
             client.setRequestMethod("DELETE");
 
             client.connect();
@@ -137,7 +130,6 @@ public class RestClient {
             File file = new File(jsonFilePath);
 
             String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
-//
             String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
@@ -178,9 +170,7 @@ public class RestClient {
             String authorization = auth.computeSignature(headers, new HashMap<>(), AWS4SignerBase.EMPTY_BODY_SHA256, awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
-//            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            //System.out.println("AUTH: " + authorization);
             client.setRequestMethod("GET");
 
             client.connect();
@@ -217,7 +207,6 @@ public class RestClient {
             File file = new File(jsonFilePath);
 
             String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
-//
             String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
