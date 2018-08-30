@@ -12,6 +12,7 @@ initial_headers = {
     'content-type': "application/json",
     'x-api-key': data["xApiKey"]
 }
+
 # This sends a request to the Rightsline API with the json and headers
 response = requests.post(url, data=json_to_send, headers=initial_headers)
 print(response.content.decode())

@@ -14,21 +14,18 @@ public class ConfigSetup {
         return basicAuth;
     }
 
-    public static boolean getConfigFile(){
+    public static boolean getConfigFile() {
         File file = new File("./Config/dev_config.json");
-
         try {
             JsonObject credentials = new JsonParser().parse(new FileReader(file.getPath())).getAsJsonObject();
             String user = credentials.get("user").getAsString();
             String pass = credentials.get("pass").getAsString();
             String combined = user + ":" + pass;
-            basicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());            
-        }
-        catch(Exception e){
+            basicAuth = "Basic " + Base64.getEncoder().encodeToString(combined.getBytes());
+
+        } catch (Exception e) {
             System.out.println("Please ensure that you have a valid config file in the Config folder ");
         }
 		return !basicAuth.isEmpty();
-//        System.out.println(getBasicAuth());
-
     }
 }

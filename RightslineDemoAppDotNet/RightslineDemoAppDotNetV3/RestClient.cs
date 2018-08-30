@@ -71,6 +71,7 @@ namespace RightslineDemoAppDotNetV3
                 credentials.GetValue("accessKey").ToString(), credentials.GetValue("secretKey").ToString());
             Console.WriteLine(authorization);
             //Add the signed authorization to headers
+            Console.WriteLine("AUTHORIZATION: " + authorization);
             headers.Add("Authorization", authorization);
             string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
             //Console.WriteLine(response);

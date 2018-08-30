@@ -18,15 +18,16 @@ public class RestClient {
     private static String CatalogItemFeaturePostExampleJson = "\\Catalog Item Example JSON\\CatalogItemEpisodePOST.json";
     private static String RelationshipPostExampleJson = "\\Relationship Example JSON\\RelationshipPost.json";
     private static String TablePostExampleJson = "\\Table Example JSON\\TablePostExample.json";
-    public static void DemoMethod(){
-        System.out.println(GetRequestDemoMethod("catalog-item","1541"));
-        //PostCatalogItemEpisodeDemoMethod();
-        //System.out.println(UpdateEntityDemoMethod("catalog-item", "1548", CatalogItemEpisodePutExampleJson));
-        //DeleteEntityDemoMethod("catalog-Item", "1548");
+
+    public static void DemoMethod() {
+        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+        String newId = PostEntityDemoMethod("catalog-item");
+        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
+        DeleteEntityDemoMethod("catalog-Item", newId);
     }
 
-    public static String PostCatalogItemEpisodeDemoMethod() {
-        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
+    public static String PostEntityDemoMethod(String entityType) {
+        String newId = PostEntityDemoMethod(entityType, CatalogItemEpisodePostExampleJson);
         System.out.println("The ID for the newest created catalog-item is: " + newId);
         return newId;
     }
