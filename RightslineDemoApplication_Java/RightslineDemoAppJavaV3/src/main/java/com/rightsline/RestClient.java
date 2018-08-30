@@ -13,9 +13,12 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 public class RestClient {
 
@@ -40,14 +43,12 @@ public class RestClient {
     private static String TablePostExampleJson = "./Table Example JSON/TablePostExample.json";
 
     public static void DemoMethod() {
-//        System.out.println(ConfigSetup.getCredentials());
-
 
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
         String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
         System.out.println(newId);
 //        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
-        //System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
+//        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
 //        DeleteEntityDemoMethod("catalog-Item", newId);
     }
 
@@ -238,28 +239,18 @@ public class RestClient {
             headers.put("content-type", "application/json");
             headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
             headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
-
             File file = new File(jsonFilePath);
-            String jsonFile = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
-//            String listString = "";
-//            for(String s : jsonFile){
-//                listString += s;
-//            }
 
-
-
-
-            System.out.println(" Hash: " +(BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile))));
-            String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile)), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+            String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
+//
+            String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
-//            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            System.out.println("AUTH: " + authorization);
             client.setRequestMethod("POST");
 
             client.connect();
-            String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile);
+            String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile1.substring(1));
             return response;
         } catch (Exception e) {
             e.printStackTrace();
