@@ -1,0 +1,6 @@
+{
+  "AccessKey": "ABCDEFGHIJ0123456789",
+  "SecretKey": "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$",
+  "AccountId": "012345678901",
+  "QueueName": "v2_environment.fifo"
+}

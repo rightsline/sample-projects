@@ -14,6 +14,7 @@ namespace RightslineDemoAppDotNetSQS.Config
     public class ConfigSetup
     {  
         private const string Algorithm = "AWS4-HMAC-SHA256";
+        //reads the config.json file and extracts the neccessary information for accessing SQS
         public static Dictionary<string, string> GetConfigFile()
         {
             var config = new Dictionary<string, string>();

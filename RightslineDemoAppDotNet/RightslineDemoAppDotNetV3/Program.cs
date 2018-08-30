@@ -1,5 +1,7 @@
 ﻿using RightslineDemoAppDotNetV3.Config;
 using System;
+using System.IO;
+using System.Text;
 
 namespace RightslineDemoAppDotNetV3
 {
@@ -12,8 +14,7 @@ namespace RightslineDemoAppDotNetV3
 
             //Replace the following IDs with your own
             //Console.WriteLine(RestClient.GetTableMethod("1890"));
-            //Console.WriteLine(RestClient.GetCatalogItemMethod("1051"));
-
+            //Console.WriteLine(RestClient.GetCatalogItemMethod("1541"));
 
             //Console.WriteLine("New table created with id: " + RestClient.PostCatalogItemMethod("Catalog Item Example JSON/CatalogItemEpisodePOST.json"));
             //Console.WriteLine(RestClient.DeleteCatalogItemMethod("1547"));
