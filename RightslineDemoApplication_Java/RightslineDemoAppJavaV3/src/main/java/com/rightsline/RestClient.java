@@ -45,9 +45,9 @@ public class RestClient {
     public static void DemoMethod() {
 
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
-        System.out.println(newId);
-//        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
+//        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
+//        System.out.println(newId);
+        System.out.println(UpdateEntityDemoMethod("catalog-item", "1561", CatalogItemEpisodePutExampleJson));
 //        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
 //        DeleteEntityDemoMethod("catalog-Item", newId);
     }
@@ -67,21 +67,6 @@ public class RestClient {
         return awsCreds;
     }
 
-//    public static String PostEntityDemoMethod() {
-//        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
-//        System.out.println("The ID for the newest created catalog-item is: " + newId);
-//        return newId;
-//    }
-//
-//    public static void PostCatalogItemFeatureDemoMethod() {
-//        String newId = PostEntityDemoMethod("catalog-item", CatalogItemFeaturePostExampleJson);
-//        System.out.println("The ID for the newest created catalog-item is: " + newId);
-//    }
-//
-//    public static void PostTableDemoMethod() {
-//        String newId = PostEntityDemoMethod("table", TablePostExampleJson);
-//        System.out.println("The ID for the newest created catalog-item is: " + newId);
-//    }
 //
 //    public static void PostRelationshipDemoMethod() {
 //        String newId = PostEntityDemoMethod("relationship", RelationshipPostExampleJson);
@@ -132,54 +117,44 @@ public class RestClient {
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
      * Returns the updated entity's information in xml string format
      *
-     * @param EntityType
-     * @param EntityId
+     * @param entityType
+     * @param entityId
      * @param jsonFilePath
      * @return
      */
-    public static String UpdateEntityDemoMethod(String EntityType, String EntityId, String jsonFilePath) {
-//        try {
-//            //Create client
-//            URL url = new URL(BaseConnectionString + EntityType + "/" + EntityId);
-//            client = (HttpURLConnection) url.openConnection();
-//            client.setRequestMethod("PUT");
-//            client.setRequestProperty("Content-Type", "application/json");
-//            client.setDoOutput(true);
-//            client.setRequestProperty("Authorization", ConfigSetup.getCredentials());
+    public static String UpdateEntityDemoMethod(String entityType, String entityId, String jsonFilePath) {
+
+        try {
+            HashMap<String, String> awsCreds = getApiResponse();
+
+            //Create client
+            URL url = new URL(BaseConnectionString + entityType + "/" + entityId);
+            AWS4SignerForAuthorizationHeader auth = new AWS4SignerForAuthorizationHeader(url, "PUT", "execute-api", "us-east-1");
+            Map<String, String> headers = new HashMap<>();
+            headers.put("content-type", "application/json");
+            headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
+            headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
+            File file = new File(jsonFilePath);
+
+            String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
 //
-//            //Attach the JSON string for the entity you wish to create
-//            //We have specified an example file path but this is changeable
-//            String folderPath = System.getProperty("user.dir") + jsonFilePath;
-//            String jsonBody = ReadFile(folderPath);
-//            System.out.println(jsonBody);
-//            OutputStream stream = client.getOutputStream();
-//            OutputStreamWriter wr = new OutputStreamWriter(stream, "UTF-8");
-//            wr.write(jsonBody);
-//            wr.flush();
-//            wr.close();
-//            stream.close();
-//            client.connect();
-//
-//            //Get the response
-//            BufferedReader bufferedReader = new BufferedReader(
-//                    new InputStreamReader(client.getInputStream()));
-//            String result;
-//            //Append each line
-//            StringBuffer response = new StringBuffer();
-//            while ((result = bufferedReader.readLine()) != null) {
-//                response.append(result);
-//            }
-//            bufferedReader.close();
-//            return response.toString();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return null;
-//        } finally {
-//            if (client != null) {
-//                client.disconnect();
-//            }
-//        }
-        return "";
+            String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+            client = (HttpURLConnection) url.openConnection();
+
+            headers.put("Authorization", authorization);
+            client.setRequestMethod("PUT");
+
+            client.connect();
+            String response = HttpUtils.invokeHttpRequest(url, "PUT", headers, jsonFile1.substring(1));
+            return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (client != null) {
+                client.disconnect();
+            }
+        }
     }
 
     /**
