@@ -83,7 +83,8 @@ public class RestClient {
 
     /**
      * Valid EntityTypes are Catalog-Item, Table, Contact, Rightset, Deal
-     *  Returns the updated entity's information in xml string format
+     * Returns the updated entity's information in xml string format
+     *
      * @param EntityType
      * @param EntityId
      * @param jsonFilePath

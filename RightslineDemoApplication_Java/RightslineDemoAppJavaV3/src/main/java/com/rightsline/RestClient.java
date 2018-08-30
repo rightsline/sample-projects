@@ -5,6 +5,7 @@ import auth.AWS4SignerForAuthorizationHeader;
 import auth.AWS4SignerForQueryParameterAuth;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import util.BinaryUtils;
 import util.HttpUtils;
 
 import java.io.*;
@@ -12,6 +13,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,14 +43,12 @@ public class RestClient {
     private static String TablePostExampleJson = "./Table Example JSON/TablePostExample.json";
 
     public static void DemoMethod() {
-//        System.out.println(ConfigSetup.getCredentials());
-
 
 //        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-//        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
-//        System.out.println(newId);
+        String newId = PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson);
+        System.out.println(newId);
 //        System.out.println(UpdateEntityDemoMethod("catalog-item", newId, CatalogItemEpisodePutExampleJson));
-        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
+//        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
 //        DeleteEntityDemoMethod("catalog-Item", newId);
     }
 
@@ -239,23 +240,21 @@ public class RestClient {
             headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
             headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
             File file = new File(jsonFilePath);
+            Charset charset = Charset.forName("UTF-8");
 
-            Scanner sc = new Scanner(file);
-            StringBuilder jsonFile = new StringBuilder();
-            while (sc.hasNextLine())
-                jsonFile.append(sc.nextLine());
-
-            System.out.println(" Hash: " +(AWS4SignerBase.bytesToHex(AWS4SignerBase.hash(jsonFile.toString()))));
-            String authorization = auth.computeSignature(headers, null, AWS4SignerBase.bytesToHex(AWS4SignerBase.hash(jsonFile.toString())), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+            String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
+            System.out.println(jsonFile1.substring(1));
+            System.out.println(" Hash: " + (AWS4SignerBase.bytesToHex(AWS4SignerBase.hash(jsonFile1.substring(1)))));
+//
+            String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
 //            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            System.out.println("AUTH: " + authorization);
             client.setRequestMethod("POST");
 
             client.connect();
-            String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile.toString());
+            String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile1.substring(1));
             return response;
         } catch (Exception e) {
             e.printStackTrace();
