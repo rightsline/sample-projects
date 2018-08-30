@@ -135,7 +135,7 @@ public abstract class AWS4SignerBase {
                         canonicalizedHeaderNames + "\n" +
                         bodyHash;
 
-        System.out.println("\nCANONICAL REQUEST: " + canonicalRequest + "\n");
+        //System.out.println("\nCANONICAL REQUEST: " + canonicalRequest + "\n");
         return canonicalRequest;
     }
 
@@ -209,7 +209,7 @@ public abstract class AWS4SignerBase {
                         scope + "\n" +
                         BinaryUtils.toHex(hash(canonicalRequest));
 
-        System.out.println("\nSTRINGTOSIGN: "+ stringToSign + "\n");
+        //System.out.println("\nSTRINGTOSIGN: "+ stringToSign + "\n");
         return stringToSign;
     }
 

@@ -54,7 +54,7 @@ public class RestClient {
 
     private static HashMap<String, String> getApiResponse() throws MalformedURLException {
         String response = HttpUtils.invokeHttpRequest(new URL(apiEndpointUrl), "POST", initialHeaders, json);
-        System.out.println(response);
+        //System.out.println(response);
 
         JsonObject awsCredentials = new JsonParser().parse(response).getAsJsonObject();
 
@@ -112,7 +112,7 @@ public class RestClient {
 
 //            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            System.out.println("AUTH: " + authorization);
+            //System.out.println("AUTH: " + authorization);
             client.setRequestMethod("DELETE");
 
             client.connect();
@@ -205,7 +205,7 @@ public class RestClient {
 
 //            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
-            System.out.println("AUTH: " + authorization);
+            //System.out.println("AUTH: " + authorization);
             client.setRequestMethod("GET");
 
             client.connect();
