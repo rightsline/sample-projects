@@ -218,8 +218,9 @@ public abstract class AWS4SignerBase {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             byte[] toBeEncoded = text.substring(1).getBytes();
-            byte[] toBeEncodedUTF8 = text.getBytes(StandardCharsets.UTF_8);
-            byte[] encodedHash = md.digest(toBeEncoded);
+            md.update(toBeEncoded);
+            byte[] encodedHash = md.digest();
+
             return encodedHash;
         } catch (Exception e) {
             throw new RuntimeException("Unable to compute hash while signing request: " + e.getMessage(), e);

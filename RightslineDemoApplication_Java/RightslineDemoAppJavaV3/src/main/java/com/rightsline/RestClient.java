@@ -240,20 +240,12 @@ public class RestClient {
             headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
 
             File file = new File(jsonFilePath);
-            String jsonFile = new String(Files.readAllBytes(file.toPath()), StandardCharsets.UTF_8);
-//            String listString = "";
-//            for(String s : jsonFile){
-//                listString += s;
-//            }
-
-
-
+            String jsonFile = String.join("\n", (Files.readAllLines(file.toPath())));
 
             System.out.println(" Hash: " +(BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile))));
             String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile)), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
             client = (HttpURLConnection) url.openConnection();
 
-//            client.setRequestProperty("Authorization", authorization);
             headers.put("Authorization", authorization);
             System.out.println("AUTH: " + authorization);
             client.setRequestMethod("POST");
