@@ -16,6 +16,7 @@ import java.util.TreeMap;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
+import com.sun.xml.internal.bind.api.impl.NameConverter;
 import util.HttpUtils;
 import util.BinaryUtils;
 
@@ -216,7 +217,9 @@ public abstract class AWS4SignerBase {
     public static byte[] hash(String text) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] encodedHash = md.digest(text.getBytes(StandardCharsets.UTF_8));
+            byte[] toBeEncoded = text.substring(1).getBytes();
+            byte[] toBeEncodedUTF8 = text.getBytes(StandardCharsets.UTF_8);
+            byte[] encodedHash = md.digest(toBeEncoded);
             return encodedHash;
         } catch (Exception e) {
             throw new RuntimeException("Unable to compute hash while signing request: " + e.getMessage(), e);
@@ -234,15 +237,6 @@ public abstract class AWS4SignerBase {
         } catch (Exception e) {
             throw new RuntimeException("Unable to compute hash while signing request: " + e.getMessage(), e);
         }
-    }
-    public static String bytesToHex(byte[] hash) {
-        StringBuffer hexString = new StringBuffer();
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) hexString.append('0');
-            hexString.append(hex);
-        }
-        return hexString.toString();
     }
     
     protected static byte[] sign(String stringData, byte[] key, String algorithm) {

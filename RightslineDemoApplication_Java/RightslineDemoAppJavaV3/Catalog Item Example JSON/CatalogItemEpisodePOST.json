@@ -1,4 +1,4 @@
-﻿{  
+﻿{
   "parentRelationship": null,
   "revisionId": 0,
   "title": "Example Episode POST",
@@ -15,7 +15,7 @@
   },
   "characteristics": {
     "format": "HDCAM",
-    "genre": ["Action", "Adventure", "Animation"],
+    "genre": [ "Action", "Adventure", "Animation" ],
     "file_format_type": "SD",
     "subtitle_format": "EIA-708 (DTVCC Transport) text stream",
     "subtitle_language": "English (US)",
