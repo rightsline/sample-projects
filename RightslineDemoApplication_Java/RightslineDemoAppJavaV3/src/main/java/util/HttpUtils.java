@@ -23,8 +23,8 @@ public class HttpUtils {
                                          String httpMethod,
                                          Map<String, String> headers,
                                          String requestBody) {
-        System.out.println(headers.keySet());
-        System.out.println(headers.values().toString());
+        //System.out.println(headers.keySet());
+        //System.out.println(headers.values().toString());
         HttpURLConnection connection = createHttpConnection(endpointUrl, httpMethod, headers);
         try {
             if ( requestBody != null ) {
@@ -78,9 +78,9 @@ public class HttpUtils {
             connection.setRequestMethod(httpMethod);
             
             if ( headers != null ) {
-                System.out.println("--------- Request headers ---------");
+                //System.out.println("--------- Request headers ---------");
                 for ( String headerKey : headers.keySet() ) {
-                    System.out.println(headerKey + ": " + headers.get(headerKey));
+                    //System.out.println(headerKey + ": " + headers.get(headerKey));
                     connection.setRequestProperty(headerKey, headers.get(headerKey));
                 }
             }
