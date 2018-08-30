@@ -7,12 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         if(ConfigSetup.getConfigFile()){
-            System.out.println("CONFIG FILE ACQUIRED. PROCEEDING");
-            try {
-                RestClient.DemoMethod();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            RestClient.DemoMethod();
         }
 
     }

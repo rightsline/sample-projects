@@ -1,6 +1,7 @@
 package auth;
 
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public abstract class AWS4SignerBase {
     /**
      * Create a new AWS V4 signer.
      * 
-     * @param endpointUri
+     * @param endpointUrl
      *            The service endpoint, including the path to any resource.
      * @param httpMethod
      *            The HTTP verb for the request, e.g. GET.
@@ -215,8 +216,8 @@ public abstract class AWS4SignerBase {
     public static byte[] hash(String text) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(text.getBytes("UTF-8"));
-            return md.digest();
+            byte[] encodedHash = md.digest(text.getBytes(StandardCharsets.UTF_8));
+            return encodedHash;
         } catch (Exception e) {
             throw new RuntimeException("Unable to compute hash while signing request: " + e.getMessage(), e);
         }
@@ -233,6 +234,15 @@ public abstract class AWS4SignerBase {
         } catch (Exception e) {
             throw new RuntimeException("Unable to compute hash while signing request: " + e.getMessage(), e);
         }
+    }
+    public static String bytesToHex(byte[] hash) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
     
     protected static byte[] sign(String stringData, byte[] key, String algorithm) {
