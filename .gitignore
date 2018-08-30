@@ -1657,3 +1657,6 @@ RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/Config/configV2.json
 RightslineDemoApplication_Python/Rightsline_API_V3/config.json
 RightslineDemoApplication_Python/Rightsline_API_V2/dev_config.json
 RighstlineDemoApplication_Java/RighstlineDemoAppJavaV2/Config/dev_config.json
+/RightslineDemoApplication_Java/RightslineDemoAppJavaV3/target/classes/com/rightsline/RestClient.class.REMOTE.class
+/RightslineDemoApplication_Java/RightslineDemoAppJavaV3/target/classes/com/rightsline/RestClient.class.LOCAL.class
+/RightslineDemoApplication_Java/RightslineDemoAppJavaV3/target/classes/com/rightsline/RestClient.class.BASE.class
