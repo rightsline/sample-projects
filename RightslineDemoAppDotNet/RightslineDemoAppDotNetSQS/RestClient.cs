@@ -31,6 +31,16 @@ namespace RightslineDemoAppDotNetSQS
         private static string Regex = "\\{(.*?)\\}<";
         private static int MessagesToReceieve = 10;
 
+        //Test method to check the queue once for a relationship item and delete received messages
+        public static void DemoMonitor()
+        {
+            var messages = GetSQSMessages();
+            var jsonobjects = FilterXML(messages);
+            Notify(jsonobjects, "relationship");
+            var receipts = GetReceiptHandles(messages);
+            DeleteMessage(receipts);
+        }
+
         //This returns an XML string from the SQS queue that contains the 10 most recent messages. 
         public static string GetSQSMessages()
         {
@@ -39,7 +49,7 @@ namespace RightslineDemoAppDotNetSQS
             // placing the region into the url if we're not using us-east-1.
             var regionUrlPart = string.Format("-{0}", region);
             //This is our QA fifo queue, replace it with your queue's url
-            var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
+            var endpointUri = BaseUrl + config["AccountId"] + "/" + config["QueueName"];
             var requestParameters = "Action=ReceiveMessage&MaxNumberOfMessages=" + MessagesToReceieve;
             var uri = new Uri(endpointUri + "?" + requestParameters);            
             var headers = new Dictionary<string, string>()
@@ -86,15 +96,7 @@ namespace RightslineDemoAppDotNetSQS
             var receipts = GetReceiptHandles(messages);
             DeleteMessage(receipts);
         }
-        //Test method to check the queue once for a relationship item and delete received messages
-        public static void DemoMonitor()
-        {
-            var messages = GetSQSMessages();
-            var jsonobjects = FilterXML(messages);
-            Notify(jsonobjects, "relationship");
-            var receipts = GetReceiptHandles(messages);
-            DeleteMessage(receipts);
-        }
+
         //Uses regex to filter the XML then converts it to JSON and builds JSON objects out of the results
         private static List<JObject> FilterXML(string messages)
         {
@@ -135,15 +137,14 @@ namespace RightslineDemoAppDotNetSQS
             var entityregex = new Regex("v2\\/(.*?)\\/");
             foreach (JObject message in messages)
             {
+                var x = entityregex.Match(message["entityUrl"].ToString());
                 //message["entityUrl"].ToString().Contains(entityName)
                 var messageEntity = entityregex.Match(message["entityUrl"].ToString()).Groups[1];
                 if (messageEntity.ToString().Equals(entityName))
                 {
                     numMessages++;
                     Console.WriteLine("A " + messageEntity + " was " + message["action"] + ", URL: " + message["entityUrl"]);
-                    numMessages++;
-
-               }
+                }
                 //Uncomment this if you want to be notified of all other messsages in the response
                 //else
                 //{
@@ -166,15 +167,17 @@ namespace RightslineDemoAppDotNetSQS
                 // placing the region into the url if we're not using us-east-1.
                 var regionUrlPart = string.Format("-{0}", region);
                 //This is our QA fifo queue, replace it with your queue's url
-                var endpointUri = "https://sqs.us-west-2.amazonaws.com/013474081760/v2_qa_div29.fifo/";
+                var endpointUri = BaseUrl + config["AccountId"] + "/" + config["QueueName"];
                 //Encode the receipt handle and add it to the url
+                Console.WriteLine(receipt);
+                Console.WriteLine();
                 var encodedReceipt = WebUtility.UrlEncode(receipt);
                 var requestParameters = "Action=DeleteMessage&ReceiptHandle=" + encodedReceipt;
+                
                 var uri = new Uri(endpointUri + "?" + requestParameters);
                 var headers = new Dictionary<string, string>()
                 {
                     {AWS4SignerBase.X_Amz_Content_SHA256, AWS4SignerBase.EMPTY_BODY_SHA256}
-//                  {"content-type", "text/plain"}
                 };
                 //Use the AWS4 signer to generate the signer and sign the request
                 var signer = new AWS4SignerForAuthorizationHeader()
@@ -189,7 +192,7 @@ namespace RightslineDemoAppDotNetSQS
                 headers.Add("Authorization", authorization);
 
                 string response = HttpHelpers.InvokeHttpRequest(uri, "GET", headers, null);
-
+                //Console.WriteLine(response);
                 //Console.WriteLine("Receipt for message deleted: " + receipt);
 
             }
