@@ -1,0 +1,11 @@
+{
+    "template": { "templateId": 2 },
+    "title": "test.pdf",
+    "parentRelationship": [
+      {
+        "parentCharTypeId": 4,
+        "parentRecordId": 1819
+      }
+    ],
+    "characteristics": { }
+  }

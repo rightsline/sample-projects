@@ -3,8 +3,10 @@ import json, requests, hashlib, hmac, sys, datetime
 with open('config.json', 'r') as file:
     data = json.loads(''.join(file.readlines()))
 
+host = data["host"]
+
 # This portion of the code sends a request to the Rightsline API for temporary AWS credentials. These are single use credentials.
-url = "https://api-dev.rightsline.com/v3/auth/temporary-credentials"
+url = "https://" + host + "/v3/auth/temporary-credentials"
 json_to_send = "{\n\t\"accessKey\":\"%s\",\n\t\"secretKey\":\"%s\"\n}" % (data["accessKey"], data["secretKey"])
 
 # These are the headers that are sent with the initial AWS temporary credentials
@@ -27,11 +29,9 @@ securityToken = response["sessionToken"]
 # The API will also return an expiration, but it's not required for any further code.
 expiration = response["expiration"]
 
-base_connection = "http://api-dev.rightsline.com/v3"
+base_connection = "http://" + host + "/v3"
 service = 'execute-api'
 region = "us-east-1"
-host = 'api-dev.rightsline.com'
-
 
 def generate_AWS_headers(method, request_params, payload=""):
     # Key derivation functions. See:
@@ -287,3 +287,5 @@ def deleteRelationship(relationship_id):
 
     # Step 3: Print out results
     print(returned.content.decode().replace('\\n', '\n'))
+
+getCatalogItem(5)

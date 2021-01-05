@@ -3,8 +3,11 @@ package com.rightsline;
 import auth.AWS4SignerBase;
 import auth.AWS4SignerForAuthorizationHeader;
 import auth.AWS4SignerForQueryParameterAuth;
+import okhttp3.*;
+
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+
 import util.BinaryUtils;
 import util.HttpUtils;
 
@@ -15,14 +18,17 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class RestClient {
 
-    public static String BaseConnectionString = "https://api-dev.rightsline.com/v3/";
+    // public static String BaseConnectionString = "https://api-dev.rightsline.com/v3/";
+    public static String BaseConnectionString = "http://localhost:8081/v3/";
 
 
     static HttpURLConnection client;
@@ -41,16 +47,18 @@ public class RestClient {
     private static String CatalogItemFeaturePostExampleJson = "./Catalog Item Example JSON/CatalogItemEpisodePOST.json";
     private static String RelationshipPostExampleJson = "./Relationship Example JSON/RelationshipPost.json";
     private static String TablePostExampleJson = "./Table Example JSON/TablePostExample.json";
+    private static String FilePostExampleJson = "./File Example JSON/FilePOST.json";
 
     public static void DemoMethod() {
 
         /*
             These are sample CRUD operations. Please replace the itemIds and json files for your own usage.
          */
-        System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
-        System.out.println(PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson));
-        System.out.println(UpdateEntityDemoMethod("catalog-item", "1561", CatalogItemEpisodePutExampleJson));
-        System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
+        System.out.println(PostFileDemoMethod("C:\\Users\\adamm\\Desktop\\pdf2.pdf", FilePostExampleJson));
+        // System.out.println(GetRequestDemoMethod("catalog-item", "1541"));
+         //System.out.println(PostEntityDemoMethod("catalog-item", CatalogItemEpisodePostExampleJson));
+        // System.out.println(UpdateEntityDemoMethod("catalog-item", "1561", CatalogItemEpisodePutExampleJson));
+        // System.out.println(DeleteEntityDemoMethod("catalog-item", "1557"));
     }
 
     private static HashMap<String, String> getApiResponse() throws MalformedURLException {
@@ -216,6 +224,65 @@ public class RestClient {
             client.connect();
             String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile1.substring(1));
             return response;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            if (client != null) {
+                client.disconnect();
+            }
+        }
+    }
+
+    public static String PostFileDemoMethod(String filePath, String jsonFilePath) {
+
+        try {
+            URL url = new URL(BaseConnectionString + "file");
+            File file = new File(filePath);
+
+            HashMap<String, String> awsCreds = getApiResponse();
+
+            // byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+            File jsonFile = new File(jsonFilePath);
+
+            String jsonFile1 = String.join("\n", Files.readAllLines(jsonFile.toPath()));
+
+            OkHttpClient client = new OkHttpClient.Builder()
+            .readTimeout(100000, TimeUnit.MILLISECONDS)
+            .build();
+
+            RequestBody formBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(),
+                    RequestBody.create(MediaType.parse("application/pdf"), file))
+                .addFormDataPart("entity", jsonFile1)
+                .build();
+                Map<String, String> headers = new HashMap<>();
+            headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
+            headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
+                Headers headers2 = Headers.of(headers);
+            Request request = new Request.Builder().url(url).post(formBody).headers(headers2).build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+            //Create client
+            
+            // AWS4SignerForAuthorizationHeader auth = new AWS4SignerForAuthorizationHeader(url, "POST", "execute-api", "us-east-1");
+            // Map<String, String> headers = new HashMap<>();
+            // headers.put("content-type", "application/json");
+            // headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
+            // headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
+            // File file = new File(jsonFilePath);
+
+            // String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
+            // String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+            // client = (HttpURLConnection) url.openConnection();
+
+            // headers.put("Authorization", authorization);
+            // client.setRequestMethod("POST");
+
+            // client.connect();
+            // String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile1.substring(1));
+            // return response;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
