@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
 
 public class RestClient {
 
-    // public static String BaseConnectionString = "https://api-dev.rightsline.com/v3/";
-    public static String BaseConnectionString = "http://localhost:8081/v3/";
+    public static String BaseConnectionString = "https://api-dev.rightsline.com/v3/";
+    // public static String BaseConnectionString = "http://localhost:8081/v3/";
 
 
     static HttpURLConnection client;
@@ -241,8 +241,7 @@ public class RestClient {
             File file = new File(filePath);
 
             HashMap<String, String> awsCreds = getApiResponse();
-
-            // byte[] fileBytes = Files.readAllBytes(Paths.get(filePath));
+            
             File jsonFile = new File(jsonFilePath);
 
             String jsonFile1 = String.join("\n", Files.readAllLines(jsonFile.toPath()));
@@ -257,32 +256,23 @@ public class RestClient {
                     RequestBody.create(MediaType.parse("application/pdf"), file))
                 .addFormDataPart("entity", jsonFile1)
                 .build();
-                Map<String, String> headers = new HashMap<>();
+
+            AWS4SignerForAuthorizationHeader auth = new AWS4SignerForAuthorizationHeader(url, "POST", "execute-api", "us-east-1");
+
+            Map<String, String> headers = new HashMap<>();
+
             headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
             headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
-                Headers headers2 = Headers.of(headers);
+
+            String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
+
+            headers.put("Authorization", authorization);
+
+            Headers headers2 = Headers.of(headers);
             Request request = new Request.Builder().url(url).post(formBody).headers(headers2).build();
             Response response = client.newCall(request).execute();
             return response.body().string();
-            //Create client
             
-            // AWS4SignerForAuthorizationHeader auth = new AWS4SignerForAuthorizationHeader(url, "POST", "execute-api", "us-east-1");
-            // Map<String, String> headers = new HashMap<>();
-            // headers.put("content-type", "application/json");
-            // headers.put("x-amz-security-token", awsCreds.get("sessionToken"));
-            // headers.put("x-api-key", ConfigSetup.getCredentials().get("xApiKey"));
-            // File file = new File(jsonFilePath);
-
-            // String jsonFile1 = String.join("\n", Files.readAllLines(file.toPath()));
-            // String authorization = auth.computeSignature(headers, null, BinaryUtils.toHex(AWS4SignerBase.hash(jsonFile1.substring(1))), awsCreds.get("accessKey"), awsCreds.get("secretKey"));
-            // client = (HttpURLConnection) url.openConnection();
-
-            // headers.put("Authorization", authorization);
-            // client.setRequestMethod("POST");
-
-            // client.connect();
-            // String response = HttpUtils.invokeHttpRequest(url, "POST", headers, jsonFile1.substring(1));
-            // return response;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
