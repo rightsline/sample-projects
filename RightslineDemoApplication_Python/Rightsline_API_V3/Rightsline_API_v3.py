@@ -27,7 +27,7 @@ securityToken = response["sessionToken"]
 # The API will also return an expiration, but it's not required for any further code.
 expiration = response["expiration"]
 
-base_connection = "http://api-dev.rightsline.com/v3"
+base_connection = "https://api-dev.rightsline.com/v3"
 service = 'execute-api'
 region = "us-east-1"
 host = 'api-dev.rightsline.com'
@@ -77,20 +77,23 @@ def generate_AWS_headers(method, request_params, payload=""):
     # Step 4: Create the canonical headers and signed headers. Header names
     # must be trimmed and lowercase, and sorted in code point order from
     # low to high. Note that there is a trailing \n.
+
+    # Step 5: Create the list of signed headers. This lists the headers
+        # in the canonical_headers list, delimited with ";" and in alpha order.
+        # Note: The request can include any headers; canonical_headers and
+        # signed_headers lists those that you want to be included in the
+        # hash of the request. "Host" and "x-amz-date" are always required.
     if method != 'GET':
         # All requests besides a GET will require a content type (Usually application/json)
         canonical_headers = '\ncontent-type:application/json' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
                             data["xApiKey"] + "\n"
+        
+        signed_headers = 'content-type;host;x-amz-date;x-amz-security-token;x-api-key'
     else:
         # GET requests don't need a content type and will deny the request if provided one
-        canonical_headers = '\ncontent-type:' + '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
+        canonical_headers = '\nhost:' + host + '\n' + 'x-amz-date:' + amzdate + '\n' + 'x-amz-security-token:' + securityToken + '\n' + 'x-api-key:' + \
                             data["xApiKey"] + "\n"
-    # Step 5: Create the list of signed headers. This lists the headers
-    # in the canonical_headers list, delimited with ";" and in alpha order.
-    # Note: The request can include any headers; canonical_headers and
-    # signed_headers lists those that you want to be included in the
-    # hash of the request. "Host" and "x-amz-date" are always required.
-    signed_headers = 'content-type;host;x-amz-date;x-amz-security-token;x-api-key'
+        signed_headers = 'host;x-amz-date;x-amz-security-token;x-api-key'
 
     # Step 6: Create payload hash (hash of the request body content). For GET
     # requests, the payload is an empty string ("").
